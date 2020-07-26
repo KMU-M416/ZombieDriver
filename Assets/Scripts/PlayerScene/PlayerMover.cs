@@ -7,7 +7,11 @@ public class PlayerMover : MonoBehaviour
     public Transform wheel;
 
     [Header("Sensibility")]
-    public float speed;
+    public float accelSpeed = 20;
+    public float angleSpeed = 30;
+    public int angleDegree = 60;
+
+    int way; // -1:left 0:forward 1:right
 
     private void FixedUpdate()
     {
@@ -18,22 +22,37 @@ public class PlayerMover : MonoBehaviour
 
     void Movement()
     {
+        if (Input.GetKey(KeyCode.LeftArrow))
+        {
+            //wheel.Rotate(-Vector3.up * angleSpeed * Time.deltaTime);
+            wheel.localRotation = Quaternion.Euler(0, -angleDegree * 0.3f, 0);
+            way = -1;
+        }
+        else if (Input.GetKey(KeyCode.RightArrow))
+        {
+            //wheel.Rotate(Vector3.up * angleSpeed * Time.deltaTime);
+            wheel.localRotation = Quaternion.Euler(0, angleDegree * 0.3f, 0);
+            way = 1;
+        }
+        else
+        {
+            wheel.localRotation = Quaternion.Euler(0, 0, 0);
+            way = 0;
+        }
+        
+
         if (Input.GetKey(KeyCode.UpArrow))
         {
-            transform.Translate(Vector3.forward * speed * Time.deltaTime, Space.Self);
+            transform.Rotate(Vector3.up * (angleDegree * way) * Time.deltaTime);
+            transform.Translate(Vector3.forward * accelSpeed * Time.deltaTime, Space.Self);
         }
         if (Input.GetKey(KeyCode.DownArrow))
         {
-            transform.Translate(Vector3.back * speed * Time.deltaTime, Space.Self);
+            transform.Rotate(Vector3.up * (angleDegree * -way) * Time.deltaTime);
+            transform.Translate(Vector3.back * accelSpeed * Time.deltaTime, Space.Self);
         }
 
-        if (Input.GetKey(KeyCode.LeftArrow))
-        {
-            wheel.Rotate(-Vector3.up * 30 * Time.deltaTime);
-        }
-        if (Input.GetKey(KeyCode.RightArrow))
-        {
-            wheel.Rotate(Vector3.up * 30 * Time.deltaTime);
-        }
     }
+
+
 }
