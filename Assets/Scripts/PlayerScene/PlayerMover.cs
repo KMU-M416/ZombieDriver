@@ -39,8 +39,17 @@ public class PlayerMover : MonoBehaviour
             wheel.localRotation = Quaternion.Euler(0, 0, 0);
             way = 0;
         }
+
+
+
+        float ver = Input.GetAxis("Vertical");
+
+        transform.Rotate( (ver > 0 ? Vector3.up : Vector3.down) * (angleDegree * way) * Time.deltaTime);
+        transform.Translate(Vector3.forward * ver * accelSpeed * Time.deltaTime, Space.Self);
         
 
+
+        /*
         if (Input.GetKey(KeyCode.UpArrow))
         {
             transform.Rotate(Vector3.up * (angleDegree * way) * Time.deltaTime);
@@ -51,7 +60,7 @@ public class PlayerMover : MonoBehaviour
             transform.Rotate(Vector3.up * (angleDegree * -way) * Time.deltaTime);
             transform.Translate(Vector3.back * accelSpeed * Time.deltaTime, Space.Self);
         }
-
+        */
     }
 
 
