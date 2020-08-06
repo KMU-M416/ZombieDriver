@@ -6,7 +6,6 @@ public enum CamType
 {
     Type1,
     Type2,
-    Type3,
 }
 
 public class CamMover : MonoBehaviour
@@ -14,11 +13,14 @@ public class CamMover : MonoBehaviour
     
     public Transform target;
 
+    [Header("Components")]
+    public Camera cam;
+
     [Header("Sensibility")]
     public CamType camType = CamType.Type1;
 
-    public float verticalDist = 25;
-    public float horizontalDist = 15;
+    public float verticalDist = 25; // (ortho)15
+    public float horizontalDist = 15; // (ortho)10
     public float camLerpSpeed = 2;
 
     // === private variables ===
@@ -38,6 +40,9 @@ public class CamMover : MonoBehaviour
 
     void Cam1()
     {
+        cam.orthographic = false;
+        cam.nearClipPlane = 0.1f;
+
         transform.position =
             Vector3.Lerp(transform.position,
             target.transform.position + target.up * verticalDist + -target.forward * horizontalDist,
@@ -48,6 +53,10 @@ public class CamMover : MonoBehaviour
 
     void Cam2()
     {
+        cam.orthographic = true;
+        cam.orthographicSize = verticalDist;
+        cam.nearClipPlane = -50f;
+
         transform.position = target.position + new Vector3(-horizontalDist, verticalDist, -horizontalDist);
 
         transform.LookAt(target);

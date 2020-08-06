@@ -1,0 +1,18 @@
+1.0.3 -> 1.0.4
+'1.0.4 Apply lowpoly city asset, etc.'
+
+============================
+
+# Player Scene #
+
+-** PlayerMover.cs **
+
+1. 제자리에서 좌/우로 회전하던 버그가 수정되었습니다.
+
+-** CamMover **
+
+1. Orthonormal type cam으로 적용
+
+-** Map **
+
+1. 맵 적용 - Polygon city demo
