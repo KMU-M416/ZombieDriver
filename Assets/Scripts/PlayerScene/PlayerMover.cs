@@ -44,7 +44,8 @@ public class PlayerMover : MonoBehaviour
 
         float ver = Input.GetAxis("Vertical");
 
-        transform.Rotate( (ver > 0 ? Vector3.up : Vector3.down) * (angleDegree * way) * Time.deltaTime);
+        if (ver != 0)
+            transform.Rotate((ver > 0 ? Vector3.up : Vector3.down) * (angleDegree * way) * Time.deltaTime);
         transform.Translate(Vector3.forward * ver * accelSpeed * Time.deltaTime, Space.Self);
         
 

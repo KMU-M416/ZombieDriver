@@ -12,6 +12,6 @@ EditorBuildSettings:
     path: Assets/Scenes/PlayerScene.unity
     guid: 2e2f8f2681a3b5a4398005c13797365d
   - enabled: 1
-    path: Assets/Scenes/JombieScene.unity
+    path: Assets/Scenes/ZombieScene.unity
     guid: 9ee53fbabacb5134eb77d12546e4959c
   m_configObjects: {}
