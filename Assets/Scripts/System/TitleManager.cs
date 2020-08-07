@@ -9,7 +9,7 @@ public class TitleManager : MonoBehaviour
     public void GameStart()
     {
         SceneManager.LoadSceneAsync("PlayerScene");
-        SceneManager.LoadSceneAsync("JombieScene", LoadSceneMode.Additive);
+        SceneManager.LoadSceneAsync("ZombieScene", LoadSceneMode.Additive);
     }
 
     public void GameQuit()
