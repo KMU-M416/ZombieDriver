@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerMover : MonoBehaviour
 {
-    public Transform wheel;
+    public Transform wheelL, wheelR;
 
     [Header("Sensibility")]
     public float accelSpeed = 20;
@@ -25,18 +25,21 @@ public class PlayerMover : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftArrow))
         {
             //wheel.Rotate(-Vector3.up * angleSpeed * Time.deltaTime);
-            wheel.localRotation = Quaternion.Euler(0, -angleDegree * 0.3f, 0);
+            wheelL.localRotation = Quaternion.Euler(0, -angleDegree * 0.5f, 0);
+            wheelR.localRotation = Quaternion.Euler(0, -angleDegree * 0.5f, 0);
             way = -1;
         }
         else if (Input.GetKey(KeyCode.RightArrow))
         {
             //wheel.Rotate(Vector3.up * angleSpeed * Time.deltaTime);
-            wheel.localRotation = Quaternion.Euler(0, angleDegree * 0.3f, 0);
+            wheelL.localRotation = Quaternion.Euler(0, angleDegree * 0.5f, 0);
+            wheelR.localRotation = Quaternion.Euler(0, angleDegree * 0.5f, 0);
             way = 1;
         }
         else
         {
-            wheel.localRotation = Quaternion.Euler(0, 0, 0);
+            wheelL.localRotation = Quaternion.Euler(0, 0, 0);
+            wheelR.localRotation = Quaternion.Euler(0, 0, 0);
             way = 0;
         }
 
@@ -48,21 +51,6 @@ public class PlayerMover : MonoBehaviour
             transform.Rotate((ver > 0 ? Vector3.up : Vector3.down) * (angleDegree * way) * Time.deltaTime);
         transform.Translate(Vector3.forward * ver * accelSpeed * Time.deltaTime, Space.Self);
         
-
-
-        /*
-        if (Input.GetKey(KeyCode.UpArrow))
-        {
-            transform.Rotate(Vector3.up * (angleDegree * way) * Time.deltaTime);
-            transform.Translate(Vector3.forward * accelSpeed * Time.deltaTime, Space.Self);
-        }
-        if (Input.GetKey(KeyCode.DownArrow))
-        {
-            transform.Rotate(Vector3.up * (angleDegree * -way) * Time.deltaTime);
-            transform.Translate(Vector3.back * accelSpeed * Time.deltaTime, Space.Self);
-        }
-        */
+        
     }
-
-
 }
