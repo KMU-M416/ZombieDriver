@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ZombieControler : MonoBehaviour
 {
@@ -23,11 +24,9 @@ public class ZombieControler : MonoBehaviour
     
     void Start()
     {
-        
         ZombieGenerator = transform.parent.parent.GetComponent<ZombieGenerator>();
     }
-
-    // Update is called once per frame
+    
     void Update()
     {
         transform.position = new Vector3(transform.position.x, 0, transform.position.z);
