@@ -91,7 +91,7 @@ public class ZombieGenerator : MonoBehaviour
                     zombieSmartType.gameObject.SetActive(true);
                 }
 
-                currentSpawnCount++;
+                currentSpawnCount += spawnCount;
             }
 
             if (currentSpawnCount > maxSpawnCount)
@@ -107,6 +107,15 @@ public class ZombieGenerator : MonoBehaviour
     // 빌려간거 다시 돌려줌
     public void returnObj(GameObject obj, ZombieType zombieType)
     {
+        ZombieGroupMaker ZGM = obj.transform.GetChild(3).GetComponent<ZombieGroupMaker>();
+
+        ZGM.decreaseScore(obj.transform.GetChild(3).gameObject);
+        
+        if(ZGM.rocketNPC != null)
+        {
+            ZGM.rocketNPC.GetComponent<AssultController>().deleteList(obj.transform.GetChild(3).gameObject);
+        }
+
         obj.SetActive(false);
 
         if (zombieType == ZombieType.normalAI) poolingNormalZombie.Enqueue(obj);
