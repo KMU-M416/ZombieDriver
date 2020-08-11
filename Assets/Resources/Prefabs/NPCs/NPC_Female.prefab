@@ -1166,6 +1166,27 @@ PrefabInstance:
       propertyPath: m_Name
       value: NPCCore
       objectReference: {fileID: 0}
+    - target: {fileID: 7607143513615672350, guid: d2d5bf2cbf578634cb4b090fbe8f7cb4,
+        type: 3}
+      propertyPath: shotEff
+      value: 
+      objectReference: {fileID: 1000011797152326, guid: fc77379d421383d4295235cfc0dc5a78,
+        type: 3}
+    - target: {fileID: 7607143513615672350, guid: d2d5bf2cbf578634cb4b090fbe8f7cb4,
+        type: 3}
+      propertyPath: status.damage
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 7607143513615672350, guid: d2d5bf2cbf578634cb4b090fbe8f7cb4,
+        type: 3}
+      propertyPath: status.shotSpeed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7607143513615672350, guid: d2d5bf2cbf578634cb4b090fbe8f7cb4,
+        type: 3}
+      propertyPath: type
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d2d5bf2cbf578634cb4b090fbe8f7cb4, type: 3}
 --- !u!4 &5518182169236935709 stripped

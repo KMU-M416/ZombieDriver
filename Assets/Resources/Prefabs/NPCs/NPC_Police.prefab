@@ -1235,6 +1235,16 @@ PrefabInstance:
       propertyPath: type
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7607143513615672350, guid: d2d5bf2cbf578634cb4b090fbe8f7cb4,
+        type: 3}
+      propertyPath: status.damage
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 7607143513615672350, guid: d2d5bf2cbf578634cb4b090fbe8f7cb4,
+        type: 3}
+      propertyPath: status.shotSpeed
+      value: 0.25
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d2d5bf2cbf578634cb4b090fbe8f7cb4, type: 3}
 --- !u!4 &976563506236484759 stripped
