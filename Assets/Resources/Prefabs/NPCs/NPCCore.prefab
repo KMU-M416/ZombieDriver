@@ -176,6 +176,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5876e8559bbd5fc428e799fde6cbc82e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  anim: {fileID: 0}
+  shotEff: {fileID: 0}
+  muzzle: {fileID: 0}
+  status:
+    damage: 0
+    shotSpeed: 0
   type: 0
   target: {fileID: 0}

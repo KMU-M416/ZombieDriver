@@ -114,7 +114,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1867ae28879af63489c36984c157cbeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myGroupScore: 1
+  member: []
+  rocketNPC: {fileID: 0}
 --- !u!1 &5652205391898337856
 GameObject:
   m_ObjectHideFlags: 0
@@ -1961,7 +1962,7 @@ GameObject:
   - component: {fileID: 3802969605417685475}
   m_Layer: 10
   m_Name: zombie2
-  m_TagString: Untagged
+  m_TagString: root
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2045,6 +2046,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8978d66126b95c4a83368e439d795e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  status:
+    hp: 100
+    currentHp: 0
+    moveSpeed: 0
   myType: 0
   destoryTime: 0
 --- !u!1 &5652205391898338296
