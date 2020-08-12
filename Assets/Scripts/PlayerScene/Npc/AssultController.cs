@@ -22,8 +22,8 @@ public class AssultController : MonoBehaviour
 {
     [Header("Components")]
     public GameObject shotEff; // prefs for each weapon type
-    //public Transform muzzle; // 총구
-    
+                               //public Transform muzzle; // 총구
+
 
     Animator anim; // auto load on start()
     GameObject shotgunRange; // 샷건 공격 범위, auto load on start().
@@ -55,7 +55,6 @@ public class AssultController : MonoBehaviour
 
         StartCoroutine(Assult());
     }
-    
 
     IEnumerator Assult()
     {
@@ -63,7 +62,7 @@ public class AssultController : MonoBehaviour
 
         while (true)
         {
-            
+
             // 공격 대상이 없다면 진행 중단
             if (target != null)
             {
@@ -82,17 +81,17 @@ public class AssultController : MonoBehaviour
                 switch (type)
                 {
                     // 가장 체력이 낮은 적 공격
-                    case WeaponType.pistol:                        
+                    case WeaponType.pistol:
 
                         anim.SetTrigger("assult");
-                        
+
                         GameObject tmpP = Instantiate(shotEff, transform.position + transform.TransformVector(0, 1, 1), Quaternion.identity);
                         tmpP.transform.eulerAngles = transform.eulerAngles + new Vector3(0, -90, 0);
 
                         int minHp = int.MaxValue;
 
-                        print($"[TEST] Target List Length : {targetList.Count}");
-                        for(int i=0;i<targetList.Count; i++)
+
+                        for (int i = 0; i < targetList.Count; i++)
                         {
                             if (minHp > targetList[i].GetComponent<ZombieControler>().GetHp())
                             {
@@ -122,7 +121,7 @@ public class AssultController : MonoBehaviour
                         yield return new WaitForSeconds(status.shotSpeed);
 
                         break;
-                        
+
                     // 일반 공격
                     case WeaponType.rifle:
 
@@ -138,28 +137,28 @@ public class AssultController : MonoBehaviour
                             targetList.Remove(target.gameObject);
                             target = null;
                         }
-                        
 
                         //yield return new WaitForSeconds(0.5f); // reload
                         yield return new WaitForSeconds(status.shotSpeed);
 
                         break;
-                        
+
                     // 가장 뭉쳐 있는 적 공격
                     case WeaponType.rocket:
-
                         // 가장 많은 개체수가 밀집되어있는 군집 비교 탐색
                         maxScore = 0;
+
                         for (int i = 0; i < targetList.Count; i++)
                         {
-                            if (maxScore < targetList[i].GetComponent<ZombieGroupMaker>().member.Count)
+                            if (maxScore < targetList[i].transform.GetChild(3).GetComponent<ZombieGroupMaker>().member.Count)
                             {
-                                maxScore = targetList[i].GetComponent<ZombieGroupMaker>().member.Count;
+                                maxScore = targetList[i].transform.GetChild(3).GetComponent<ZombieGroupMaker>().member.Count;
                                 target = targetList[i].transform;
                             }
                         }
 
                         GameObject tmp;
+
                         if (maxScore != 0)
                         {
                             anim.SetTrigger("assult");
@@ -181,7 +180,6 @@ public class AssultController : MonoBehaviour
                                 }
                             }
                         }
-
 
                         //yield return new WaitForSeconds(2.0f); // 연사 속도
                         yield return new WaitForSeconds(status.shotSpeed);
@@ -233,32 +231,22 @@ public class AssultController : MonoBehaviour
         }
 
     }
-    
+
 
     private void OnTriggerStay(Collider other)
     {
-        
-
         if (type != WeaponType.rocket && type != WeaponType.pistol)
         {
             if (target != null) return;
         }
         else
         {
-            if (type == WeaponType.rocket)
-            {
-                if (other.CompareTag("CheckedGroup") && !targetList.Contains(other.gameObject))
-                {
-                    targetList.Add(other.gameObject);
-                    other.gameObject.GetComponent<ZombieGroupMaker>().setNPCObject(gameObject);
-                }
-            }
-
-            else if (type == WeaponType.pistol)
+            if (type == WeaponType.pistol || type == WeaponType.rocket)
             {
                 if (other.CompareTag("root") && !targetList.Contains(other.gameObject))
                 {
                     targetList.Add(other.gameObject);
+                    // other.GetComponent<ZombieControler>().setNPCObject(gameObject);
                 }
             }
         }
@@ -268,7 +256,7 @@ public class AssultController : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (type != WeaponType.rocket)// && type != WeaponType.pistol)
+        if (type != WeaponType.rocket && type != WeaponType.pistol)
         {
             if (other.transform == target)
             {
@@ -284,12 +272,8 @@ public class AssultController : MonoBehaviour
     // 좀비 비활성화시 onTriggerExit 함수가 미작동하여 아래 함수로 멤버 제거
     public void deleteList(GameObject obj)
     {
-        if (type != WeaponType.rocket && type != WeaponType.pistol)
-            return;
+        print(targetList);
 
-        for (int i = 0; i < targetList.Count; i++)
-        {
-            targetList.Remove(obj);
-        }
+        if (targetList.Contains(obj)) targetList.Remove(obj);
     }
 }

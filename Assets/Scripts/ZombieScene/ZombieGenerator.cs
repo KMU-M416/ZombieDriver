@@ -22,7 +22,7 @@ public class ZombieGenerator : MonoBehaviour
     [Tooltip("최대 소환 수")]
     public int maxSpawnCount;
     public ZombieType zombieType;
-
+    
     // 현재 포탈에서 소환한 좀비 수
     int currentSpawnCount = 0;
 
@@ -94,7 +94,7 @@ public class ZombieGenerator : MonoBehaviour
                 currentSpawnCount += spawnCount;
             }
 
-            if (currentSpawnCount > maxSpawnCount)
+            if (currentSpawnCount >= maxSpawnCount)
             {
                 print("소환 수가 최대치 입니다.");
                 StopCoroutine(generator);
@@ -108,13 +108,8 @@ public class ZombieGenerator : MonoBehaviour
     public void returnObj(GameObject obj, ZombieType zombieType)
     {
         ZombieGroupMaker ZGM = obj.transform.GetChild(3).GetComponent<ZombieGroupMaker>();
-
+      
         ZGM.decreaseScore(obj.transform.GetChild(3).gameObject);
-        
-        if(ZGM.rocketNPC != null)
-        {
-            ZGM.rocketNPC.GetComponent<AssultController>().deleteList(obj.transform.GetChild(3).gameObject);
-        }
 
         obj.SetActive(false);
 
