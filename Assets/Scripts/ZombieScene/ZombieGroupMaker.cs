@@ -5,11 +5,11 @@ using UnityEngine;
 public class ZombieGroupMaker : MonoBehaviour
 {
     public List<GameObject> member = new List<GameObject>();
-    public GameObject rocketNPC = null;
 
     private void OnEnable()
     {
         member.Clear();
+        member.Add(gameObject);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -26,11 +26,6 @@ public class ZombieGroupMaker : MonoBehaviour
         {
             member.Remove(other.gameObject);
         }
-    }
-
-    public void setNPCObject(GameObject NPC)
-    {
-        rocketNPC = NPC;
     }
 
     // 좀비 비활성화시 onTriggerExit 함수가 미작동하여 아래 함수로 멤버 제거

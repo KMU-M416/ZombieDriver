@@ -19,45 +19,49 @@ public class ZombieControler : MonoBehaviour
     [Header("Zombie Status")]
     public ZombieStatus status;
 
-    [Header("Sensibilities")]
-    
+    public GameObject rocketNPC, pistolNPC;
+
     [HideInInspector] // 해당 좀비 타입
     public ZombieType myType;
-    
-    [SerializeField]
-    int destoryTime;
-    // 타임과 이 좀비가 죽을 타임
-    // 테스트 용으로써 나중에 수정 예정
-    float timer;
 
     IEnumerator co_knockBack;
 
     private void OnEnable()
     {
-        timer = 0;
-        destoryTime = Random.Range(2, 30);
-
         status.currentHp = status.hp; // 사망과 함께 Pool에 반환되었다가 다시 생성되는 순간 HP 회복
     }
-    
+
+    private void OnDisable()
+    {
+        if (rocketNPC != null && pistolNPC != null)
+        {
+            rocketNPC.GetComponent<AssultController>().deleteList(gameObject);
+            pistolNPC.GetComponent<AssultController>().deleteList(gameObject);
+        }
+    }
+
     void Start()
     {
         ZombieGenerator = transform.parent.parent.GetComponent<ZombieGenerator>();
+
+        rocketNPC = GameObject.Find("NPC_Female_Rocket").GetComponentInChildren<AssultController>().gameObject;
+        pistolNPC = GameObject.Find("NPC_Male_Pistol").GetComponentInChildren<AssultController>().gameObject;
     }
-    
+
     void Update()
     {
         transform.position = new Vector3(transform.position.x, 0, transform.position.z);
-
-        //timer += Time.deltaTime;
-
-        //if (timer > destoryTime)
-        //{
-        //    ZombieGenerator.returnObj(gameObject, myType);
-        //    timer = 0;
-        //}
     }
 
+    /// <summary>
+    /// 로켓과 권총 NPC만 해당
+    /// 해당 좀비가 죽거나, 범위 내에 없을시 타겟리스트를 지우기 위함
+    /// </summary>
+    /// <param name="NPC"> NPC 오브젝트 </param>
+    //public void setNPCObject(GameObject NPC)
+    //{
+    //    targetNPC = NPC;
+    //}
 
     /// <summary>
     /// 좀비 피격
@@ -88,7 +92,7 @@ public class ZombieControler : MonoBehaviour
     {
         float timer = 0f;
         float speed = 15;
-        while(timer < 0.2f)
+        while (timer < 0.2f)
         {
             timer += Time.deltaTime;
 
@@ -98,6 +102,7 @@ public class ZombieControler : MonoBehaviour
 
         yield return null;
     }
+
 
     public int GetHp()
     {
@@ -111,5 +116,5 @@ public class ZombieControler : MonoBehaviour
     {
         ZombieGenerator.returnObj(gameObject, myType);
     }
- 
+
 }
