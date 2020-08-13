@@ -9,6 +9,12 @@ public enum ZombieType
     randomAI
 }
 
+public enum GeneratorType
+{
+    Default,
+    PlayerDetectSpawn    
+}
+
 public class ZombieGenerator : MonoBehaviour
 {
     [Header("Zombie")]
@@ -16,6 +22,7 @@ public class ZombieGenerator : MonoBehaviour
     Transform zombiesParent;
 
     [Header("Setting")]
+    public GeneratorType SpawnType;
     public float spawnTime;
     [Tooltip("한번 소환때 소환할 수")]
     public int spawnCount;
@@ -25,6 +32,9 @@ public class ZombieGenerator : MonoBehaviour
     
     // 현재 포탈에서 소환한 좀비 수
     int currentSpawnCount = 0;
+
+    // 스폰 타입이 범위 내 플레이어탐지 라면
+    bool detectPlayer = false;
 
     // 풀링
     Queue<GameObject> poolingNormalZombie = new Queue<GameObject>();
@@ -47,6 +57,8 @@ public class ZombieGenerator : MonoBehaviour
     // 초기화 함수
     void Init()
     {
+        if (SpawnType == GeneratorType.Default) detectPlayer = true;
+
         for (int i = 0; i < 100; i++)
         {
             var zombieNormalType = Instantiate(Zombies[0], zombiesParent);
@@ -74,33 +86,36 @@ public class ZombieGenerator : MonoBehaviour
 
         while (true)
         {
-            for (int i = 0; i < spawnCount; i++)
+            if (detectPlayer)
             {
-                if (zombieType == ZombieType.normalAI) type = 0;
-                else if (zombieType == ZombieType.smartAI) type = 1;
-                else type = Random.Range(0, 2);
-
-                if (type == 0)
+                for (int i = 0; i < spawnCount; i++)
                 {
-                    var zombieNormalType = poolingNormalZombie.Dequeue();
-                    zombieNormalType.gameObject.SetActive(true);
-                }
-                else
-                {
-                    var zombieSmartType = poolingSmartZombie.Dequeue();
-                    zombieSmartType.gameObject.SetActive(true);
+                    if (zombieType == ZombieType.normalAI) type = 0;
+                    else if (zombieType == ZombieType.smartAI) type = 1;
+                    else type = Random.Range(0, 2);
+
+                    if (type == 0)
+                    {
+                        var zombieNormalType = poolingNormalZombie.Dequeue();
+                        zombieNormalType.gameObject.SetActive(true);
+                    }
+                    else
+                    {
+                        var zombieSmartType = poolingSmartZombie.Dequeue();
+                        zombieSmartType.gameObject.SetActive(true);
+                    }
+
+                    currentSpawnCount += spawnCount;
                 }
 
-                currentSpawnCount += spawnCount;
+                if (currentSpawnCount >= maxSpawnCount)
+                {
+                    print("소환 수가 최대치 입니다.");
+                    StopCoroutine(generator);
+                }
             }
 
-            if (currentSpawnCount >= maxSpawnCount)
-            {
-                print("소환 수가 최대치 입니다.");
-                StopCoroutine(generator);
-            }               
-
-            yield return new WaitForSeconds(spawnTime);
+            yield return new WaitForSeconds(spawnTime);            
         }
     }
 
@@ -115,5 +130,19 @@ public class ZombieGenerator : MonoBehaviour
 
         if (zombieType == ZombieType.normalAI) poolingNormalZombie.Enqueue(obj);
         else poolingSmartZombie.Enqueue(obj);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (SpawnType == GeneratorType.PlayerDetectSpawn
+            && other.gameObject.layer == LayerMask.NameToLayer("Player"))
+            detectPlayer = true;
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (SpawnType == GeneratorType.PlayerDetectSpawn
+            && other.gameObject.layer == LayerMask.NameToLayer("Player"))
+            detectPlayer = false;
     }
 }
