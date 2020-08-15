@@ -11,8 +11,8 @@ public class NPCInfo : MonoBehaviour
 
     private void Start()
     {
-        bodyCollider.enabled = true;
-        enemyDetectTrigger.enabled = false;
+        //bodyCollider.enabled = true;
+        //enemyDetectTrigger.enabled = false;
     }
 
     public void SitOnTruck()

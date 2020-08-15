@@ -19,7 +19,7 @@ public class ZombieControler : MonoBehaviour
     [Header("Zombie Status")]
     public ZombieStatus status;
 
-    public GameObject rocketNPC, pistolNPC;
+    // public GameObject rocketNPC, pistolNPC;
 
     [HideInInspector] // 해당 좀비 타입
     public ZombieType myType;
@@ -33,19 +33,19 @@ public class ZombieControler : MonoBehaviour
 
     private void OnDisable()
     {
-        if (rocketNPC != null && pistolNPC != null)
-        {
-            rocketNPC.GetComponent<AssultController>().deleteList(gameObject);
-            pistolNPC.GetComponent<AssultController>().deleteList(gameObject);
-        }
+        //if (rocketNPC != null && pistolNPC != null)
+        //{
+        //    rocketNPC.GetComponent<AssultController>().deleteList(gameObject);
+        //    pistolNPC.GetComponent<AssultController>().deleteList(gameObject);
+        //}
     }
 
     void Start()
     {
         ZombieGenerator = transform.parent.parent.GetComponent<ZombieGenerator>();
 
-        rocketNPC = GameObject.Find("NPC_Female_Rocket").GetComponentInChildren<AssultController>().gameObject;
-        pistolNPC = GameObject.Find("NPC_Male_Pistol").GetComponentInChildren<AssultController>().gameObject;
+        //rocketNPC = GameObject.Find("NPC_Female_Rocket").GetComponentInChildren<AssultController>().gameObject;
+        //pistolNPC = GameObject.Find("NPC_Male_Pistol").GetComponentInChildren<AssultController>().gameObject;
     }
 
     void Update()
@@ -114,6 +114,18 @@ public class ZombieControler : MonoBehaviour
     /// </summary>
     void Die()
     {
+        if (GameObject.Find("NPC_Rocket(Clone)") == true)
+        {
+            AssultController rocketNPC = GameObject.Find("NPC_Rocket(Clone)").GetComponentInChildren<AssultController>();
+            rocketNPC.deleteList(gameObject);
+        }
+
+        if (GameObject.Find("NPC_Pistol(Clone)") == true)
+        {
+            AssultController pistolNPC = GameObject.Find("NPC_Pistol(Clone)").GetComponentInChildren<AssultController>();
+            pistolNPC.deleteList(gameObject);
+        }
+
         ZombieGenerator.returnObj(gameObject, myType);
     }
 
