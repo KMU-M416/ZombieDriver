@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerMover : MonoBehaviour
 {
+    [Header("Components")]
     public Transform wheelL, wheelR;
 
     [Header("Sensibility")]
@@ -18,10 +19,20 @@ public class PlayerMover : MonoBehaviour
         Movement();
     }
 
-
-
+    
     void Movement()
     {
+
+
+        float ver = Input.GetAxis("Vertical");
+        if (ver != 0)
+            transform.Rotate((ver > 0 ? Vector3.up : Vector3.down) * (angleDegree * way) * Time.deltaTime);
+        
+        transform.Translate(Vector3.forward * ver * accelSpeed * Time.deltaTime, Space.Self);
+
+
+
+
         if (Input.GetKey(KeyCode.LeftArrow))
         {
             //wheel.Rotate(-Vector3.up * angleSpeed * Time.deltaTime);
@@ -45,11 +56,6 @@ public class PlayerMover : MonoBehaviour
 
 
 
-        float ver = Input.GetAxis("Vertical");
-
-        if (ver != 0)
-            transform.Rotate((ver > 0 ? Vector3.up : Vector3.down) * (angleDegree * way) * Time.deltaTime);
-        transform.Translate(Vector3.forward * ver * accelSpeed * Time.deltaTime, Space.Self);
         
         
     }

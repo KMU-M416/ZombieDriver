@@ -114,12 +114,11 @@ public class AssultController : MonoBehaviour
                             {
                                 print($"[TEST] pistol shot {status.damage} / {target.GetComponentInParent<ZombieControler>().GetHp()}");
                             }
+                            
+                            yield return new WaitForSeconds(status.shotSpeed);
                         }
-
-
-                        //yield return new WaitForSeconds(0.5f); // reload
-                        yield return new WaitForSeconds(status.shotSpeed);
-
+                        //yield return new WaitForSeconds(status.shotSpeed);
+                        
                         break;
 
                     // 일반 공격
@@ -136,10 +135,11 @@ public class AssultController : MonoBehaviour
                         {
                             targetList.Remove(target.gameObject);
                             target = null;
-                        }
 
-                        //yield return new WaitForSeconds(0.5f); // reload
-                        yield return new WaitForSeconds(status.shotSpeed);
+                            yield return new WaitForSeconds(status.shotSpeed);
+                        }
+                        
+                        //yield return new WaitForSeconds(status.shotSpeed);
 
                         break;
 
@@ -159,6 +159,7 @@ public class AssultController : MonoBehaviour
 
                         GameObject tmp;
 
+                        // 공격 진행
                         if (maxScore != 0)
                         {
                             anim.SetTrigger("assult");
@@ -179,10 +180,11 @@ public class AssultController : MonoBehaviour
 
                                 }
                             }
-                        }
 
-                        //yield return new WaitForSeconds(2.0f); // 연사 속도
-                        yield return new WaitForSeconds(status.shotSpeed);
+                            yield return new WaitForSeconds(status.shotSpeed);
+
+                        }
+                        // yield return new WaitForSeconds(status.shotSpeed);
 
                         break;
 
@@ -191,9 +193,7 @@ public class AssultController : MonoBehaviour
                     case WeaponType.shotgun:
 
                         anim.SetTrigger("assult");
-
-
-
+                        
                         GameObject tmp2 = Instantiate(shotEff,
                             transform.position + transform.TransformVector(0, 1, 2),
                             Quaternion.Euler(transform.eulerAngles));

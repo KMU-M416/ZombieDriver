@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/ZombieScene.unity
     guid: 9ee53fbabacb5134eb77d12546e4959c
+  - enabled: 1
+    path: Assets/Scenes/LoadingScene.unity
+    guid: 47d2e2729b0ecb6408b893e95cf9f552
   m_configObjects: {}
