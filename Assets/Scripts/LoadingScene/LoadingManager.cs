@@ -64,6 +64,8 @@ public class LoadingManager : MonoBehaviour
 
         logs.text += ">> LoadSceneProcess() coroutine called [LoadingManager.cs]\n";
 
+        yield return new WaitForSeconds(1f);
+
         AsyncOperation op;
         if (nextScene == SceneNames.IngameScene.ToString())
         {
