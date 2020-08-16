@@ -53,10 +53,5 @@ public class PlayerMover : MonoBehaviour
             wheelR.localRotation = Quaternion.Euler(0, 0, 0);
             way = 0;
         }
-
-
-
-        
-        
     }
 }

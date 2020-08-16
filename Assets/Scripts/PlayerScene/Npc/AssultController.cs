@@ -62,9 +62,8 @@ public class AssultController : MonoBehaviour
 
         while (true)
         {
-
             // 공격 대상이 없다면 진행 중단
-            if (target != null)
+            if (target != null )
             {
                 if (!target.gameObject.activeInHierarchy)
                 {
@@ -95,7 +94,6 @@ public class AssultController : MonoBehaviour
                         {
                             if (minHp > targetList[i].GetComponent<ZombieControler>().GetHp())
                             {
-
                                 target = targetList[i].transform;
                                 minHp = targetList[i].GetComponent<ZombieControler>().GetHp();
                             }
@@ -229,7 +227,6 @@ public class AssultController : MonoBehaviour
             }
             yield return null;
         }
-
     }
 
 
@@ -238,6 +235,7 @@ public class AssultController : MonoBehaviour
         if (type != WeaponType.rocket && type != WeaponType.pistol)
         {
             if (target != null) return;
+            target = other.transform;
         }
         else
         {
@@ -245,13 +243,14 @@ public class AssultController : MonoBehaviour
             {
                 if (other.CompareTag("root") && !targetList.Contains(other.gameObject))
                 {
-                    targetList.Add(other.gameObject);
-                    // other.GetComponent<ZombieControler>().setNPCObject(gameObject);
+                    if (!other.GetComponent<ZombieControler>().isDead)
+                    {
+                        targetList.Add(other.gameObject);
+                        target = other.transform;
+                    }
                 }
             }
         }
-
-        target = other.transform;
     }
 
     private void OnTriggerExit(Collider other)
@@ -265,6 +264,7 @@ public class AssultController : MonoBehaviour
         }
         else
         {
+            target = null;
             targetList.Remove(other.gameObject);
         }
     }
