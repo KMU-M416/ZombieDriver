@@ -86,7 +86,7 @@ public class ZombieGenerator : MonoBehaviour
 
         while (true)
         {
-            if (detectPlayer)
+            if (detectPlayer && maxSpawnCount != 0)
             {
                 for (int i = 0; i < spawnCount; i++)
                 {
@@ -96,12 +96,15 @@ public class ZombieGenerator : MonoBehaviour
 
                     if (type == 0)
                     {
-                        var zombieNormalType = poolingNormalZombie.Dequeue();
-                        zombieNormalType.gameObject.SetActive(true);
+                        GameObject zombieNormalType = poolingNormalZombie.Dequeue();                       
+                        zombieNormalType.SetActive(true);
+                  
+                         zombieNormalType.transform.position = new Vector3(transform.position.x + Random.Range(-2,3),transform.position.y, transform.position.z + Random.Range(-2, 3));
+
                     }
                     else
                     {
-                        var zombieSmartType = poolingSmartZombie.Dequeue();
+                        GameObject zombieSmartType = poolingSmartZombie.Dequeue();
                         zombieSmartType.gameObject.SetActive(true);
                     }
 

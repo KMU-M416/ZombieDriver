@@ -109,7 +109,7 @@ NavMeshSettings:
     agentRadius: 0.5
     agentHeight: 2
     agentSlope: 45
-    agentClimb: 0.4
+    agentClimb: 1
     ledgeDropHeight: 0
     maxJumpAcrossDistance: 0
     minRegionArea: 2
@@ -120,7 +120,7 @@ NavMeshSettings:
     accuratePlacement: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 0}
+  m_NavMeshData: {fileID: 23800000, guid: 78bb2499abd5cda4bada1046718d7d76, type: 2}
 --- !u!1 &565990180
 GameObject:
   m_ObjectHideFlags: 0
@@ -357,17 +357,17 @@ PrefabInstance:
     - target: {fileID: 4993663452549960067, guid: 03081db10bac9274a9f4e7c744e5d215,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -9.432305
+      value: -12.27
       objectReference: {fileID: 0}
     - target: {fileID: 4993663452549960067, guid: 03081db10bac9274a9f4e7c744e5d215,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.68
+      value: 5.53
       objectReference: {fileID: 0}
     - target: {fileID: 4993663452549960067, guid: 03081db10bac9274a9f4e7c744e5d215,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 22.68
+      value: 45.47
       objectReference: {fileID: 0}
     - target: {fileID: 4993663452549960067, guid: 03081db10bac9274a9f4e7c744e5d215,
         type: 3}
@@ -412,7 +412,22 @@ PrefabInstance:
     - target: {fileID: 4993663452549960071, guid: 03081db10bac9274a9f4e7c744e5d215,
         type: 3}
       propertyPath: SpawnType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4993663452549960071, guid: 03081db10bac9274a9f4e7c744e5d215,
+        type: 3}
+      propertyPath: zombieType
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4993663452549960071, guid: 03081db10bac9274a9f4e7c744e5d215,
+        type: 3}
+      propertyPath: maxSpawnCount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4993663452549960071, guid: 03081db10bac9274a9f4e7c744e5d215,
+        type: 3}
+      propertyPath: spawnTime
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4993663452549960120, guid: 03081db10bac9274a9f4e7c744e5d215,
         type: 3}

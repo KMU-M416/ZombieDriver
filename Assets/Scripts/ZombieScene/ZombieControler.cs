@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.AI;
 
 [System.Serializable]
 public class ZombieStatus
@@ -10,25 +11,49 @@ public class ZombieStatus
     [HideInInspector] public int currentHp;
 
     public int moveSpeed;
+    public int attackSpeed;
+    public int attackAbility;
 }
 
 public class ZombieControler : MonoBehaviour
 {
     ZombieGenerator ZombieGenerator;
 
-    [Header("Zombie Status")]
-    public ZombieStatus status;
-
-    // public GameObject rocketNPC, pistolNPC;
-
     [HideInInspector] // 해당 좀비 타입
     public ZombieType myType;
+
+    [Header("Zombie Status")]
+    public ZombieStatus status;
+    public Transform target; // 트럭
+
+    [HideInInspector]
+    public Animator zombieAnimator;
+    [HideInInspector]
+    public bool isAttack;
+    [HideInInspector]
+    public bool isDead;
+    bool initRotate = false;
+
+   public NavMeshAgent agent; // AI
 
     IEnumerator co_knockBack;
 
     private void OnEnable()
     {
         status.currentHp = status.hp; // 사망과 함께 Pool에 반환되었다가 다시 생성되는 순간 HP 회복
+
+        isDead = isAttack = false;
+        GetComponent<CapsuleCollider>().enabled = true;
+
+        if (myType == ZombieType.smartAI)
+        {
+            if (agent == null) agent = GetComponent<NavMeshAgent>();
+
+            agent.enabled = true;
+
+            target = GameObject.Find("Truck").transform;
+        }
+        initRotate = false;
     }
 
     private void OnDisable()
@@ -43,6 +68,7 @@ public class ZombieControler : MonoBehaviour
     void Start()
     {
         ZombieGenerator = transform.parent.parent.GetComponent<ZombieGenerator>();
+        zombieAnimator = GetComponent<Animator>();
 
         //rocketNPC = GameObject.Find("NPC_Female_Rocket").GetComponentInChildren<AssultController>().gameObject;
         //pistolNPC = GameObject.Find("NPC_Male_Pistol").GetComponentInChildren<AssultController>().gameObject;
@@ -50,7 +76,30 @@ public class ZombieControler : MonoBehaviour
 
     void Update()
     {
-        transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+        if (!initRotate)
+        {
+            initRotate = true;
+            transform.Rotate(0, Random.Range(-359, 360), 0);
+        }
+
+        if (!isDead && !isAttack)
+        {
+            if (myType == ZombieType.smartAI)
+            {
+                agent.enabled = true;
+                zombieAnimator.SetBool("isWalk", true);
+                agent.SetDestination(target.position);
+            }
+            else
+            {
+                transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+            }
+        }
+        else if (myType == ZombieType.smartAI)
+        {
+            GetComponent<Rigidbody>().velocity = Vector3.zero;
+            agent.enabled = false;
+        }
     }
 
     /// <summary>
@@ -73,8 +122,9 @@ public class ZombieControler : MonoBehaviour
     {
         status.currentHp -= value;
 
-        if (status.currentHp <= 0)
+        if (status.currentHp <= 0 && !isDead)
         {
+            isDead = true;
             Die();
             return true;
         }
@@ -109,6 +159,12 @@ public class ZombieControler : MonoBehaviour
         return status.currentHp;
     }
 
+    public int GetAttackInfo(int type)
+    {
+        if (type == 0) return status.attackSpeed;
+        else return status.attackAbility;
+    }
+
     /// <summary>
     /// 
     /// </summary>
@@ -126,7 +182,30 @@ public class ZombieControler : MonoBehaviour
             pistolNPC.deleteList(gameObject);
         }
 
-        ZombieGenerator.returnObj(gameObject, myType);
+        if (myType == ZombieType.smartAI)
+        {
+            agent.enabled = false;
+            GetComponent<Rigidbody>().velocity = Vector3.zero;
+        }
+
+        target = null; // 플레이어 삭제
+
+        zombieAnimator.SetTrigger("isDead");
+
+        GetComponent<CapsuleCollider>().enabled = false;
+
+        StartCoroutine(DieAni());
+
     }
 
+    // 애니메이션 재생 후 애니메이션의 절반이 넘어가면 오브젝트 반환
+    IEnumerator DieAni()
+    {
+        while (true)
+        {
+            if (zombieAnimator.GetCurrentAnimatorStateInfo(0).IsName("10-death_fall_backward") && zombieAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.5f)
+                ZombieGenerator.returnObj(gameObject, myType);
+            yield return null;
+        }
+    }
 }
