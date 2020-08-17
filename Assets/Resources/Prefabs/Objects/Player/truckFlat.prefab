@@ -517,9 +517,11 @@ GameObject:
   - component: {fileID: 2043390071450991999}
   - component: {fileID: 2043390071450992001}
   - component: {fileID: 2043390071450992000}
+  - component: {fileID: 160670400}
+  - component: {fileID: 160670399}
   m_Layer: 8
   m_Name: truckFlat
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -585,10 +587,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wheelL: {fileID: 1758332089253195715}
   wheelR: {fileID: 6073715760678867915}
-  animator: {fileID: 0}
-  accelSpeed: 20
-  angleSpeed: 30
-  angleDegree: 60
+  status:
+    hp: 0
+    curHp: 0
+    accelSpeed: 20
+    angleSpeed: 30
+    angleDegree: 60
 --- !u!54 &2043390071450992000
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -605,6 +609,44 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
+--- !u!320 &160670400
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4933683397334936314}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 11400000, guid: 237dc0a545de1d84898a7354dbf8e74d, type: 2}
+  m_InitialState: 1
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings:
+  - key: {fileID: 1114583233721999029, guid: 237dc0a545de1d84898a7354dbf8e74d, type: 2}
+    value: {fileID: 160670399}
+  m_ExposedReferences:
+    m_References: []
+--- !u!95 &160670399
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4933683397334936314}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &7563414961874847638
 GameObject:
   m_ObjectHideFlags: 0

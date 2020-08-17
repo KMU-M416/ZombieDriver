@@ -11,7 +11,7 @@ public class NpcSpawnerController : MonoBehaviour
     public WeaponType type; // NPC 종류 설정
     public float waitTime; // 해당 NPC를 획득하기 위한 필요 대기 시간
 
-    [Header("== TEST ==")]
+    [Header("== TEST ==")] 
     public bool trigger;
 
     private void Start()

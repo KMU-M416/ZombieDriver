@@ -12,7 +12,7 @@ public class ZombieStatus
 
     public int moveSpeed;
     public int attackSpeed;
-    public int attackAbility;
+    public int damage;
 }
 
 public class ZombieControler : MonoBehaviour
@@ -159,10 +159,14 @@ public class ZombieControler : MonoBehaviour
         return status.currentHp;
     }
 
+    /// <summary>
+    /// 좀비 공격 정보를 받아오는 함수
+    /// </summary>
+    /// <param name="type">0: 공격 속도,  1: 공격력</param>
     public int GetAttackInfo(int type)
     {
         if (type == 0) return status.attackSpeed;
-        else return status.attackAbility;
+        else return status.damage;
     }
 
     /// <summary>

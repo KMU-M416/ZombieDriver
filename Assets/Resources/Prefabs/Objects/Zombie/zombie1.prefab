@@ -114,7 +114,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29d3621aacb297144b9561d66fdda5ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ZC: {fileID: 0}
 --- !u!1 &2839998869571348882
 GameObject:
   m_ObjectHideFlags: 0
@@ -407,7 +406,7 @@ MonoBehaviour:
     currentHp: 0
     moveSpeed: 0
     attackSpeed: 3
-    attackAbility: 0
+    damage: 5
   target: {fileID: 0}
   zombieAnimator: {fileID: 0}
   isAttack: 0
