@@ -74,6 +74,17 @@ public class LoadingManager : MonoBehaviour
             op = SceneManager.LoadSceneAsync("PlayerScene", LoadSceneMode.Additive);
             SceneManager.LoadSceneAsync("ZombieScene", LoadSceneMode.Additive);
         }
+        else if(nextScene == SceneNames.TitleScene.ToString())
+        {
+            logs.text += ">> Destroy [Main Camera] used in Ingame Scene\n";
+            logs.text += ">> Destroy [Directional Light] used in Ingame Scene";
+
+            Destroy(GameObject.Find("Main Camera"));
+            Destroy(GameObject.Find("Directional Light"));
+
+            logs.text += ">> Load " + nextScene + " [LoadingManager.cs]\n";
+            op = SceneManager.LoadSceneAsync(nextScene, LoadSceneMode.Additive);
+        }
         else
         {
             logs.text += ">> Load " + nextScene + " [LoadingManager.cs]\n";

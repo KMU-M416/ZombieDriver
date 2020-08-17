@@ -1312,12 +1312,12 @@ PrefabInstance:
     - target: {fileID: 7607143513615672350, guid: d2d5bf2cbf578634cb4b090fbe8f7cb4,
         type: 3}
       propertyPath: status.damage
-      value: 50
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 7607143513615672350, guid: d2d5bf2cbf578634cb4b090fbe8f7cb4,
         type: 3}
       propertyPath: status.shotSpeed
-      value: 1
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 7607143513615672350, guid: d2d5bf2cbf578634cb4b090fbe8f7cb4,
         type: 3}

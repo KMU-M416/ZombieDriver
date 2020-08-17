@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ZombieAttackChecked : MonoBehaviour
 {
-    public ZombieControler ZC;
+    ZombieControler ZC;
 
     IEnumerator co_Attack;
     bool isAttack;
@@ -39,6 +39,8 @@ public class ZombieAttackChecked : MonoBehaviour
         while (true)
         {
             ZC.zombieAnimator.SetBool("isAttack", true);
+
+            PlayerMover.instance.Attacked(ZC.GetAttackInfo(1));
 
             // 체력관련
             // 채력함수(ZC.GetAttackInfo(1));
