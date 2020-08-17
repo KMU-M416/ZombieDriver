@@ -63,7 +63,7 @@ public class AssultController : MonoBehaviour
         while (true)
         {
             // 공격 대상이 없다면 진행 중단
-            if (target != null )
+            if (target != null)
             {
                 if (!target.gameObject.activeInHierarchy)
                 {
@@ -81,62 +81,71 @@ public class AssultController : MonoBehaviour
                 {
                     // 가장 체력이 낮은 적 공격
                     case WeaponType.pistol:
-
-                        anim.SetTrigger("assult");
-
-                        GameObject tmpP = Instantiate(shotEff, transform.position + transform.TransformVector(0, 1, 1), Quaternion.identity);
-                        tmpP.transform.eulerAngles = transform.eulerAngles + new Vector3(0, -90, 0);
-
-                        int minHp = int.MaxValue;
-
-
-                        for (int i = 0; i < targetList.Count; i++)
+                        if (!target.GetComponent<ZombieControler>().isDead) // 공격전 재확인
                         {
-                            if (minHp > targetList[i].GetComponent<ZombieControler>().GetHp())
-                            {
-                                target = targetList[i].transform;
-                                minHp = targetList[i].GetComponent<ZombieControler>().GetHp();
-                            }
-                        }
+                            anim.SetTrigger("assult");
 
-                        // 공격 진행
-                        if (target != null && target.gameObject.activeInHierarchy)
+                            GameObject tmpP = Instantiate(shotEff, transform.position + transform.TransformVector(0, 1, 1), Quaternion.identity);
+                            tmpP.transform.eulerAngles = transform.eulerAngles + new Vector3(0, -90, 0);
+
+                            int minHp = int.MaxValue;
+
+
+                            for (int i = 0; i < targetList.Count; i++)
+                            {
+                                if (minHp > targetList[i].GetComponent<ZombieControler>().GetHp())
+                                {
+                                    target = targetList[i].transform;
+                                    minHp = targetList[i].GetComponent<ZombieControler>().GetHp();
+                                }
+                            }
+
+                            // 공격 진행
+                            if (target != null && target.gameObject.activeInHierarchy)
+                            {
+                                // 대상이 사망했다면 타겟 리스트에서 제외
+                                if (target.GetComponentInParent<ZombieControler>().ReduceHp(status.damage))
+                                {
+                                    targetList.Remove(target.gameObject);
+                                    target = null;
+                                }
+                                else
+                                {
+                                    print($"[TEST] pistol shot {status.damage} / {target.GetComponentInParent<ZombieControler>().GetHp()}");
+                                }
+
+                                yield return new WaitForSeconds(status.shotSpeed);
+                            }
+                        }else
                         {
-                            // 대상이 사망했다면 타겟 리스트에서 제외
-                            if (target.GetComponentInParent<ZombieControler>().ReduceHp(status.damage))
-                            {
-                                targetList.Remove(target.gameObject);
-                                target = null;
-                            }
-                            else
-                            {
-                                print($"[TEST] pistol shot {status.damage} / {target.GetComponentInParent<ZombieControler>().GetHp()}");
-                            }
-                            
-                            yield return new WaitForSeconds(status.shotSpeed);
+                            targetList.Remove(target.gameObject);
+                            target = null;
                         }
                         //yield return new WaitForSeconds(status.shotSpeed);
-                        
+
                         break;
 
                     // 일반 공격
                     case WeaponType.rifle:
-
-                        anim.SetTrigger("assult"); // play shot anim
-
-                        GameObject tmpR = Instantiate(shotEff, transform.position + transform.TransformVector(0, 1, 1), Quaternion.identity);
-                        tmpR.transform.eulerAngles = transform.eulerAngles + new Vector3(0, -90, 0);
-
-                        // 공격 진행
-                        // 대상이 사망했다면 타겟 리스트에서 제외
-                        if (target.GetComponentInParent<ZombieControler>().ReduceHp(status.damage))
+                        if (!target.GetComponent<ZombieControler>().isDead) // 공격전 재확인
                         {
-                            targetList.Remove(target.gameObject);
-                            target = null;
+                            anim.SetTrigger("assult"); // play shot anim
 
+                            GameObject tmpR = Instantiate(shotEff, transform.position + transform.TransformVector(0, 1, 1), Quaternion.identity);
+                            tmpR.transform.eulerAngles = transform.eulerAngles + new Vector3(0, -90, 0);
+
+                            // 공격 진행                        
+                            // 대상이 사망했다면 타겟 리스트에서 제외
+                            if (target.GetComponentInParent<ZombieControler>().ReduceHp(status.damage))
+                            {
+                                //targetList.Remove(target.gameObject);
+                                target = null;
+                                                                
+                            }
                             yield return new WaitForSeconds(status.shotSpeed);
                         }
-                        
+                        else target = null;
+
                         //yield return new WaitForSeconds(status.shotSpeed);
 
                         break;
@@ -158,7 +167,7 @@ public class AssultController : MonoBehaviour
                         GameObject tmp;
 
                         // 공격 진행
-                        if (maxScore != 0)
+                        if (maxScore != 0 && !target.GetComponent<ZombieControler>().isDead)
                         {
                             anim.SetTrigger("assult");
                             tmp = Instantiate(shotEff, target.position, Quaternion.identity);
@@ -178,7 +187,6 @@ public class AssultController : MonoBehaviour
 
                                 }
                             }
-
                             yield return new WaitForSeconds(status.shotSpeed);
 
                         }
@@ -191,7 +199,7 @@ public class AssultController : MonoBehaviour
                     case WeaponType.shotgun:
 
                         anim.SetTrigger("assult");
-                        
+
                         GameObject tmp2 = Instantiate(shotEff,
                             transform.position + transform.TransformVector(0, 1, 2),
                             Quaternion.Euler(transform.eulerAngles));
@@ -232,21 +240,26 @@ public class AssultController : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (type != WeaponType.rocket && type != WeaponType.pistol)
+        if (other.CompareTag("root"))
         {
-            if (target != null) return;
-            target = other.transform;
-        }
-        else
-        {
-            if (type == WeaponType.pistol || type == WeaponType.rocket)
+            if (type != WeaponType.rocket && type != WeaponType.pistol)
             {
-                if (other.CompareTag("root") && !targetList.Contains(other.gameObject))
+                if (target != null) return;
+
+                if (!other.GetComponent<ZombieControler>().isDead)
+                    target = other.transform;
+            }
+            else
+            {
+                if (type == WeaponType.pistol || type == WeaponType.rocket)
                 {
-                    if (!other.GetComponent<ZombieControler>().isDead)
+                    if (!targetList.Contains(other.gameObject))
                     {
-                        targetList.Add(other.gameObject);
-                        target = other.transform;
+                        if (!other.GetComponent<ZombieControler>().isDead)
+                        {
+                            targetList.Add(other.gameObject);
+                            target = other.transform;
+                        }
                     }
                 }
             }
@@ -272,8 +285,7 @@ public class AssultController : MonoBehaviour
     // 좀비 비활성화시 onTriggerExit 함수가 미작동하여 아래 함수로 멤버 제거
     public void deleteList(GameObject obj)
     {
-        print(targetList);
-
+        if (target == obj) target = null;
         if (targetList.Contains(obj)) targetList.Remove(obj);
     }
 }

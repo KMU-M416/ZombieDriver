@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public enum CamType
 {
@@ -27,6 +28,7 @@ public class CamMover : MonoBehaviour
 
     private void FixedUpdate()
     {
+
         switch (camType)
         {
             case CamType.Type1:
@@ -53,12 +55,15 @@ public class CamMover : MonoBehaviour
 
     void Cam2()
     {
-        cam.orthographic = true;
-        cam.orthographicSize = verticalDist;
-        cam.nearClipPlane = -50f;
+        if(target.position.x >= -183.1f)
+        {
+            cam.orthographic = true;
+            cam.orthographicSize = verticalDist;
+            cam.nearClipPlane = -50f;
 
-        transform.position = target.position + new Vector3(-horizontalDist, verticalDist, -horizontalDist);
+            transform.position = target.position + new Vector3(-horizontalDist, verticalDist, -horizontalDist);
 
-        transform.LookAt(target);
+            transform.LookAt(target);
+        }
     }
 }
