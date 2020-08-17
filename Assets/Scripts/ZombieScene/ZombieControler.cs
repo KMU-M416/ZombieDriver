@@ -182,6 +182,12 @@ public class ZombieControler : MonoBehaviour
             pistolNPC.deleteList(gameObject);
         }
 
+        //if (GameObject.Find("NPC_Rifle(Clone)") == true)
+        //{
+        //    AssultController pistolNPC = GameObject.Find("NPC_Rifle(Clone)").GetComponentInChildren<AssultController>();
+        //    pistolNPC.deleteList(gameObject);
+        //}
+
         if (myType == ZombieType.smartAI)
         {
             agent.enabled = false;
