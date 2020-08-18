@@ -8,16 +8,20 @@ public class NpcSpawnerController : MonoBehaviour
     Transform SpeechBubble;
 
     [Header("Sensibilities")]
-    public WeaponType type; // NPC 종류 설정
-    public float waitTime; // 해당 NPC를 획득하기 위한 필요 대기 시간
+    [SerializeField] bool isFirstNpcSpawner;
+    [SerializeField] WeaponType type; // NPC 종류 설정
+    public float waitTime = 3.0f; // 해당 NPC를 획득하기 위한 필요 대기 시간
 
     [Header("== TEST ==")] 
     public bool trigger;
 
     private void Start()
     {
+        InitType();
+
         SpeechBubble = transform.Find("SpeechBubble");
         SpeechBubble.transform.eulerAngles = new Vector3(45, 45, 0);
+
     }
 
     private void Update()
@@ -29,10 +33,23 @@ public class NpcSpawnerController : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// NPC 스포너에서 n초간 대기 후 본 함수를 호출해 해당 NPC를 획득 및 스포너 삭제
-    /// </summary>
-    public void GetNpcFromSpawner()
+    public void InitType()
+    {
+        if (isFirstNpcSpawner)
+            type = WeaponType.pistol;
+
+        else
+        {
+            type = (WeaponType)Random.Range(0, 4);
+            gameObject.SetActive(false);
+
+        }
+    }
+
+        /// <summary>
+        /// NPC 스포너에서 n초간 대기 후 본 함수를 호출해 해당 NPC를 획득 및 스포너 삭제
+        /// </summary>
+        public void GetNpcFromSpawner()
     {
         // 타겟 NPC 로드 - # 경로 주의 #
         var v = Resources.Load("Prefabs/Objects/NPCs/NPC_" + type.ToString());
