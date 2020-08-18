@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class TitleManager : MonoBehaviour
 {
+    public GameObject SettingUI;
+
     public void GameStart()
     {
         LoadingManager.LoadScene(SceneNames.IngameScene.ToString(), SceneNames.TitleScene.ToString());
@@ -17,6 +19,10 @@ public class TitleManager : MonoBehaviour
     public void GameQuit()
     {
         Application.Quit();
-        
+    }
+
+    public void onSettingUI()
+    {
+        SettingUI.SetActive(true);
     }
 }

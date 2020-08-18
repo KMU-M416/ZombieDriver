@@ -124,7 +124,7 @@ public class ZombieControler : MonoBehaviour
 
         if (status.currentHp <= 0 && !isDead)
         {
-            isDead = true;
+            isDead = true;           
             Die();
             return true;
         }
