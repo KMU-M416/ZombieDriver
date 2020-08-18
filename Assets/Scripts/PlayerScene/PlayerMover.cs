@@ -27,11 +27,12 @@ public class PlayerMover : MonoBehaviour
 
     [Header("Components")]
     public Transform wheelL, wheelR;
-    
+
     public PlayerStatus status;
 
     int way; // -1:left 0:forward 1:right
 
+    AudioSource audioSource;
 
     private void Start()
     {
@@ -48,19 +49,35 @@ public class PlayerMover : MonoBehaviour
     void Init()
     {
         status.curHp = status.hp;
+
+        audioSource = GetComponent<AudioSource>();
     }
 
 
     void Movement()
     {
-
-
         float ver = Input.GetAxis("Vertical");
-        if (ver != 0)
-            transform.Rotate((ver > 0 ? Vector3.up : Vector3.down) * (status.angleDegree * way) * Time.deltaTime);
-        
-        transform.Translate(Vector3.forward * ver * status.accelSpeed * Time.deltaTime, Space.Self);
 
+        if (ver != 0)
+        {
+            audioSource.volume = Mathf.Lerp(audioSource.volume, 0.2f, 0.1f);
+            transform.Rotate((ver > 0 ? Vector3.up : Vector3.down) * (status.angleDegree * way) * Time.deltaTime);
+
+            // 엔진사운드
+            audioSource.pitch = Mathf.Lerp(audioSource.pitch, ver * 1.7f, 0.05f);
+        }
+        else
+        {
+            // 멈춰 있으면 시동걸려 있는 소리를 내기위한 사운드 조절 후 피치 조절
+            if (audioSource.pitch <= 0.3f)
+            {
+                audioSource.volume = Mathf.Lerp(audioSource.volume, 0.4f, 0.1f);
+                audioSource.pitch = 0.3f;
+            }
+            else audioSource.pitch = Mathf.Lerp(audioSource.pitch, ver * 1.7f, 0.05f);
+        }
+
+        transform.Translate(Vector3.forward * ver * status.accelSpeed * Time.deltaTime, Space.Self);
 
 
 
@@ -99,9 +116,9 @@ public class PlayerMover : MonoBehaviour
         print($"[TEST] player attacked ({status.curHp}/{status.hp})");
 
         CamEffManager.instance.CallAttackedEff();
-        
 
-        if(status.curHp <= 0)
+
+        if (status.curHp <= 0)
         {
             Die();
         }

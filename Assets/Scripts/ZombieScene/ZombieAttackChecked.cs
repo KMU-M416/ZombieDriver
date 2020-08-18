@@ -6,7 +6,7 @@ public class ZombieAttackChecked : MonoBehaviour
 {
     ZombieControler ZC;
 
-    IEnumerator co_Attack;
+    public IEnumerator co_Attack;
     bool isAttack;
 
     private void Start()
@@ -40,11 +40,12 @@ public class ZombieAttackChecked : MonoBehaviour
         {
             ZC.zombieAnimator.SetBool("isAttack", true);
 
-            PlayerMover.instance.Attacked(ZC.GetAttackInfo(1));
+            if (transform.parent.GetComponent<ZombieControler>().isDead)
+                StopCoroutine(co_Attack);
 
-            // 체력관련
-            // 채력함수(ZC.GetAttackInfo(1));
-            yield return new WaitForSeconds(ZC.GetAttackInfo(0));
+            PlayerMover.instance.Attacked(ZC.GetAttackInfo(1));
+            
+            yield return null;
         }
     }
 }

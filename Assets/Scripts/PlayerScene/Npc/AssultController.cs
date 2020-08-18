@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public enum WeaponType
 {
@@ -40,11 +41,15 @@ public class AssultController : MonoBehaviour
     List<GameObject> targetList;
     int maxScore = 0;
 
+    // 공격 사운드
+    AudioSource attackSound;
+
     private void Start()
     {
         // == Components == //
         anim = GetComponentInParent<Animator>();
         targetList = new List<GameObject>();
+        attackSound = GetComponent<AudioSource>();
 
         if (type == WeaponType.shotgun)
             shotgunRange = transform.Find("shotgunRange").gameObject;
@@ -84,6 +89,7 @@ public class AssultController : MonoBehaviour
                         if (!target.GetComponent<ZombieControler>().isDead) // 공격전 재확인
                         {
                             anim.SetTrigger("assult");
+                            attackSound.Play();
 
                             GameObject tmpP = Instantiate(shotEff, transform.position + transform.TransformVector(0, 1, 1), Quaternion.identity);
                             tmpP.transform.eulerAngles = transform.eulerAngles + new Vector3(0, -90, 0);
@@ -130,6 +136,7 @@ public class AssultController : MonoBehaviour
                         if (!target.GetComponent<ZombieControler>().isDead) // 공격전 재확인
                         {
                             anim.SetTrigger("assult"); // play shot anim
+                            attackSound.Play();
 
                             GameObject tmpR = Instantiate(shotEff, transform.position + transform.TransformVector(0, 1, 1), Quaternion.identity);
                             tmpR.transform.eulerAngles = transform.eulerAngles + new Vector3(0, -90, 0);
@@ -154,6 +161,7 @@ public class AssultController : MonoBehaviour
                     case WeaponType.rocket:
                         // 가장 많은 개체수가 밀집되어있는 군집 비교 탐색
                         maxScore = 0;
+                        attackSound.Play();
 
                         for (int i = 0; i < targetList.Count; i++)
                         {
