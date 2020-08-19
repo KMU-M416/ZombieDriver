@@ -7,6 +7,13 @@ public class NPCTaker : MonoBehaviour
     public Transform[] seat;
     
 
+
+
+
+
+
+
+
     // NPC와의 직접 충돌을 통해 해당 NPC를 획득하는 구문
     private void OnCollisionEnter(Collision collision)
     {

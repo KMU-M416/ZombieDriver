@@ -14,7 +14,8 @@ public enum WeaponType
 [System.Serializable]
 public class WeaponStatus
 {
-    public int damage;
+    public int level = 1;
+    public float damage;
     public float shotSpeed;
 }
 
@@ -59,6 +60,18 @@ public class AssultController : MonoBehaviour
         anim.SetInteger("weaponType", (int)type);
 
         StartCoroutine(Assult());
+    }
+
+    /// <summary>
+    /// NPC 중복 획득시 강화 함수
+    /// </summary>
+    /// <returns>강화 후의 레벨</returns>
+    public int LevelUp()
+    {
+        status.level++;
+        status.damage *= 1.3f;
+
+        return status.level;
     }
 
     IEnumerator Assult()

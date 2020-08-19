@@ -66,4 +66,18 @@ public class CamMover : MonoBehaviour
             transform.LookAt(target);
         }
     }
+
+
+    /// <summary>
+    /// 건물에 트럭이 가릴 때 건물을 반투명하게 만드는 함수
+    /// </summary>
+    void PenetrateVIsion()
+    {
+        //// 메인 카메라 - 플레이어(트럭)
+        //Ray ray = new Ray(transform.position, target.position);
+        //RaycastHit hit;
+        //if (Physics.Raycast(ray, out hit, Vector3.Distance(transform.position, target.position))){
+        //    hit.collider.transform.
+        //}
+    }
 }

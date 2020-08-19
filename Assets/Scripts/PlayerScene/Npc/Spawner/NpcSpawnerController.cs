@@ -46,24 +46,42 @@ public class NpcSpawnerController : MonoBehaviour
         }
     }
 
-        /// <summary>
-        /// NPC 스포너에서 n초간 대기 후 본 함수를 호출해 해당 NPC를 획득 및 스포너 삭제
-        /// </summary>
-        public void GetNpcFromSpawner()
+    /// <summary>
+    /// NPC 스포너에서 n초간 대기 후 본 함수를 호출해 해당 NPC를 획득 및 스포너 삭제
+    /// </summary>
+    public void GetNpcFromSpawner()
     {
-        // 타겟 NPC 로드 - # 경로 주의 #
-        var v = Resources.Load("Prefabs/Objects/NPCs/NPC_" + type.ToString());
+        // npc 신규 탑승
+        if (GameObject.FindGameObjectWithTag("Player").GetComponent<NPCTaker>().seat[(int)type].childCount == 0)
+        {
+            // 타겟 NPC 로드 - # 경로 주의 #
+            var v = Resources.Load("Prefabs/Objects/NPCs/NPC_" + type.ToString());
 
-        GameObject npc = Instantiate((GameObject)v);
-        npc.GetComponentInChildren<NPCInfo>().SitOnTruck();
+            GameObject npc = Instantiate((GameObject)v);
+            npc.GetComponentInChildren<NPCInfo>().SitOnTruck();
 
-        npc.transform.parent = GameObject.FindGameObjectWithTag("Player").GetComponent<NPCTaker>().seat[(int)type];
-        npc.transform.localPosition = Vector3.zero;
+            npc.transform.parent = GameObject.FindGameObjectWithTag("Player").GetComponent<NPCTaker>().seat[(int)type];
+            npc.transform.localPosition = Vector3.zero;
+
+            PlayerUIManager.instance.AddNpc(type, 1, npc.transform);
+        }
+
+        // 이미 탑승해 있는 npc.
+        // 해당 npc 업그레이드
+        else
+        {
+            int lv = GameObject.FindGameObjectWithTag("Player").GetComponent<NPCTaker>().seat[(int)type].GetChild(0)
+                .GetComponentInChildren<AssultController>().LevelUp();
+
+            PlayerUIManager.instance.AddNpc(type, lv);
+        }
+
+        
 
 
-
-        // 삭제
+        // 자신 npc 스포너 삭제
         Destroy(gameObject);
+        
     }
 
 }
