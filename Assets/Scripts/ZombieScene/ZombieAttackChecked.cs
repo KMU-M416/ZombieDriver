@@ -42,9 +42,8 @@ public class ZombieAttackChecked : MonoBehaviour
 
             if (transform.parent.GetComponent<ZombieControler>().isDead)
                 StopCoroutine(co_Attack);
-
-            PlayerMover.instance.Attacked(ZC.GetAttackInfo(1));
-            
+            //else PlayerMover.instance.Attacked(ZC.GetAttackInfo(1));
+                       
             yield return null;
         }
     }

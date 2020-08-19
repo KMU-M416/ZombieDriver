@@ -6,6 +6,8 @@ public class StageManager : MonoBehaviour
 {
     static public StageManager instance;
 
+    public ZombieGenerator[] zombieSpawnerList;
+
     public int curRescueNpcCount;
     public int goalRescueNpcCount = 8;
 
@@ -24,7 +26,7 @@ public class StageManager : MonoBehaviour
     public int RescueNpc()
     {
         curRescueNpcCount++;
-
+ 
         if(curRescueNpcCount >= goalRescueNpcCount)
         {
             ClearPossible();

@@ -74,12 +74,31 @@ public class AssultController : MonoBehaviour
         return status.level;
     }
 
+    /// <summary>
+    /// 피스톨 공격 대상 재탐색
+    /// </summary>
+    void reSearchTarget()
+    {
+        int minHp = int.MaxValue;
+
+        for (int i = 0; i < targetList.Count; i++)
+        {
+            if (minHp > targetList[i].GetComponent<ZombieControler>().GetHp())
+            {
+                target = targetList[i].transform;
+                minHp = targetList[i].GetComponent<ZombieControler>().GetHp();
+            }
+        }
+    }
+
     IEnumerator Assult()
     {
         Transform root = anim.transform;
 
         while (true)
         {
+            if (type == WeaponType.pistol) print(targetList.Count);
+
             // 공격 대상이 없다면 진행 중단
             if (target != null)
             {
@@ -99,6 +118,8 @@ public class AssultController : MonoBehaviour
                 {
                     // 가장 체력이 낮은 적 공격
                     case WeaponType.pistol:
+                      
+
                         if (!target.GetComponent<ZombieControler>().isDead) // 공격전 재확인
                         {
                             anim.SetTrigger("assult");
@@ -107,17 +128,7 @@ public class AssultController : MonoBehaviour
                             GameObject tmpP = Instantiate(shotEff, transform.position + transform.TransformVector(0, 1, 1), Quaternion.identity);
                             tmpP.transform.eulerAngles = transform.eulerAngles + new Vector3(0, -90, 0);
 
-                            int minHp = int.MaxValue;
-
-
-                            for (int i = 0; i < targetList.Count; i++)
-                            {
-                                if (minHp > targetList[i].GetComponent<ZombieControler>().GetHp())
-                                {
-                                    target = targetList[i].transform;
-                                    minHp = targetList[i].GetComponent<ZombieControler>().GetHp();
-                                }
-                            }
+                            reSearchTarget();
 
                             // 공격 진행
                             if (target != null && target.gameObject.activeInHierarchy)
@@ -126,7 +137,7 @@ public class AssultController : MonoBehaviour
                                 if (target.GetComponentInParent<ZombieControler>().ReduceHp(status.damage))
                                 {
                                     targetList.Remove(target.gameObject);
-                                    target = null;
+                                    reSearchTarget();
                                 }
                                 else
                                 {
@@ -138,7 +149,7 @@ public class AssultController : MonoBehaviour
                         }else
                         {
                             targetList.Remove(target.gameObject);
-                            target = null;
+                            reSearchTarget();
                         }
                         //yield return new WaitForSeconds(status.shotSpeed);
 
@@ -201,6 +212,14 @@ public class AssultController : MonoBehaviour
                                 // 대상이 사망했다면 타겟 리스트에서 제외
                                 if (v.GetComponentInParent<ZombieControler>().ReduceHp(status.damage, true))
                                 {
+                                    for (int i = 0; i < targetList.Count; i++)
+                                    {
+                                        if (maxScore < targetList[i].transform.GetChild(3).GetComponent<ZombieGroupMaker>().member.Count)
+                                        {
+                                            maxScore = targetList[i].transform.GetChild(3).GetComponent<ZombieGroupMaker>().member.Count;
+                                            target = targetList[i].transform;
+                                        }
+                                    }
                                     //targetList.Remove(target.gameObject);
                                     //target = null;
 

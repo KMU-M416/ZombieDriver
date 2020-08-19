@@ -12,7 +12,7 @@ public enum ZombieType
 public enum GeneratorType
 {
     Default,
-    PlayerDetectSpawn    
+    PlayerDetectSpawn
 }
 
 public class ZombieGenerator : MonoBehaviour
@@ -22,6 +22,8 @@ public class ZombieGenerator : MonoBehaviour
     Transform zombiesParent;
 
     [Header("Setting")]
+    [Tooltip("풀링 할 수")]
+    public int poolingCount = 200;
     public GeneratorType SpawnType;
     public float spawnTime;
     [Tooltip("한번 소환때 소환할 수")]
@@ -29,7 +31,7 @@ public class ZombieGenerator : MonoBehaviour
     [Tooltip("최대 소환 수")]
     public int maxSpawnCount;
     public ZombieType zombieType;
-    
+
     // 현재 포탈에서 소환한 좀비 수
     int currentSpawnCount = 0;
 
@@ -39,6 +41,8 @@ public class ZombieGenerator : MonoBehaviour
     // 풀링
     Queue<GameObject> poolingNormalZombie = new Queue<GameObject>();
     Queue<GameObject> poolingSmartZombie = new Queue<GameObject>();
+    GameObject zombieNormalType;
+    GameObject zombieSmartType;
 
     // 코루틴 담음
     IEnumerator generator;
@@ -59,13 +63,13 @@ public class ZombieGenerator : MonoBehaviour
     {
         if (SpawnType == GeneratorType.Default) detectPlayer = true;
 
-        for (int i = 0; i < 100; i++)
+        for (int i = 0; i < poolingCount; i++)
         {
-            var zombieNormalType = Instantiate(Zombies[0], zombiesParent);
-            var zombieSmartType = Instantiate(Zombies[1], zombiesParent);
+            zombieNormalType = Instantiate(Zombies[0], zombiesParent);
+            zombieSmartType = Instantiate(Zombies[1], zombiesParent);
 
-            zombieNormalType.gameObject.SetActive(false);
-            zombieSmartType.gameObject.SetActive(false);
+            zombieNormalType.SetActive(false);
+            zombieSmartType.SetActive(false);
 
             zombieNormalType.GetComponent<ZombieControler>().myType = ZombieType.normalAI;
             zombieSmartType.GetComponent<ZombieControler>().myType = ZombieType.smartAI;
@@ -76,6 +80,7 @@ public class ZombieGenerator : MonoBehaviour
 
         print("좀비 풀링 완료");
     }
+
 
     // 설정값에 따른 좀비 생성 함수
     IEnumerator Generator()
@@ -96,15 +101,14 @@ public class ZombieGenerator : MonoBehaviour
 
                     if (type == 0)
                     {
-                        GameObject zombieNormalType = poolingNormalZombie.Dequeue();                       
+                        zombieNormalType = poolingNormalZombie.Dequeue();
                         zombieNormalType.SetActive(true);
-                  
-                         zombieNormalType.transform.position = new Vector3(transform.position.x + Random.Range(-2,3),transform.position.y, transform.position.z + Random.Range(-2, 3));
 
+                        zombieNormalType.transform.position = new Vector3(transform.position.x + Random.Range(-2, 3), transform.position.y, transform.position.z + Random.Range(-2, 3));
                     }
                     else
                     {
-                        GameObject zombieSmartType = poolingSmartZombie.Dequeue();
+                        zombieSmartType = poolingSmartZombie.Dequeue();
                         zombieSmartType.gameObject.SetActive(true);
                     }
 
@@ -118,7 +122,7 @@ public class ZombieGenerator : MonoBehaviour
                 }
             }
 
-            yield return new WaitForSeconds(spawnTime);            
+            yield return new WaitForSeconds(spawnTime);
         }
     }
 
@@ -126,7 +130,7 @@ public class ZombieGenerator : MonoBehaviour
     public void returnObj(GameObject obj, ZombieType zombieType)
     {
         ZombieGroupMaker ZGM = obj.transform.GetChild(3).GetComponent<ZombieGroupMaker>();
-      
+
         ZGM.decreaseScore(obj.transform.GetChild(3).gameObject);
 
         obj.SetActive(false);
