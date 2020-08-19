@@ -118,9 +118,9 @@ public class ZombieControler : MonoBehaviour
     /// <param name="value">hp 감소 수치</param>
     /// <param name="isKnockBack">넉백이 필요한 경우</param>
     /// <returns> is Dead ? </returns>
-    public bool ReduceHp(int value, bool isKnockBack = false)
+    public bool ReduceHp(float value, bool isKnockBack = false)
     {
-        status.currentHp -= value;
+        status.currentHp -= (int)value;
 
         if (status.currentHp <= 0 && !isDead)
         {
