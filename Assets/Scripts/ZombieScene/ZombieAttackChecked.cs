@@ -8,10 +8,12 @@ public class ZombieAttackChecked : MonoBehaviour
 
     public IEnumerator co_Attack;
     bool isAttack;
+    Rigidbody ParentRd;
 
     private void Start()
     {
         ZC = transform.parent.GetComponent<ZombieControler>();
+        ParentRd = transform.parent.GetComponent<Rigidbody>();
         co_Attack = Attack();
     }
 
@@ -38,11 +40,12 @@ public class ZombieAttackChecked : MonoBehaviour
     {
         while (true)
         {
+            ParentRd.velocity = Vector3.zero;
             ZC.zombieAnimator.SetBool("isAttack", true);
 
-            if (transform.parent.GetComponent<ZombieControler>().isDead)
+            if (ZC.isDead)
                 StopCoroutine(co_Attack);
-            //else PlayerMover.instance.Attacked(ZC.GetAttackInfo(1));
+            else PlayerMover.instance.Attacked(ZC.GetAttackInfo(1));
                        
             yield return null;
         }

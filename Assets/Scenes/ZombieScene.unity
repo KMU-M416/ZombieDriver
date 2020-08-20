@@ -8,8 +8,9 @@ OcclusionCullingSettings:
     smallestOccluder: 5
     smallestHole: 0.25
     backfaceThreshold: 100
-  m_SceneGUID: 00000000000000000000000000000000
-  m_OcclusionCullingData: {fileID: 0}
+  m_SceneGUID: 9ee53fbabacb5134eb77d12546e4959c
+  m_OcclusionCullingData: {fileID: 36300000, guid: b22f22331faafa249867ba55efb1a3c1,
+    type: 2}
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
@@ -663,7 +664,7 @@ PrefabInstance:
     - target: {fileID: 942681101755022506, guid: 03081db10bac9274a9f4e7c744e5d215,
         type: 3}
       propertyPath: m_Radius
-      value: 24.73
+      value: 70
       objectReference: {fileID: 0}
     - target: {fileID: 4993663452549960067, guid: 03081db10bac9274a9f4e7c744e5d215,
         type: 3}
@@ -868,7 +869,7 @@ PrefabInstance:
     - target: {fileID: 942681101755022506, guid: 03081db10bac9274a9f4e7c744e5d215,
         type: 3}
       propertyPath: m_Radius
-      value: 24.73
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 4993663452549960067, guid: 03081db10bac9274a9f4e7c744e5d215,
         type: 3}
@@ -1173,7 +1174,7 @@ PrefabInstance:
     - target: {fileID: 942681101755022506, guid: 03081db10bac9274a9f4e7c744e5d215,
         type: 3}
       propertyPath: m_Radius
-      value: 24.73
+      value: 70
       objectReference: {fileID: 0}
     - target: {fileID: 4993663452549960067, guid: 03081db10bac9274a9f4e7c744e5d215,
         type: 3}
