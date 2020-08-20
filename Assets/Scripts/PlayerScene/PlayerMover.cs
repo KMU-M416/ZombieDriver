@@ -21,6 +21,11 @@ public class PlayerStatus
     public Image hpBar;
 }
 
+public static class TruckGameObject
+{
+   public static Transform Truck;
+}
+
 public class PlayerMover : MonoBehaviour
 {
     public static PlayerMover instance;
@@ -33,6 +38,8 @@ public class PlayerMover : MonoBehaviour
     int way; // -1:left 0:forward 1:right
 
     AudioSource audioSource;
+
+    private void Awake() => TruckGameObject.Truck = transform;
 
     private void Start()
     {
@@ -113,7 +120,7 @@ public class PlayerMover : MonoBehaviour
 
         status.hpBar.fillAmount = status.curHp / (float)status.hp;
 
-        print($"[TEST] player attacked ({status.curHp}/{status.hp})");
+        //print($"[TEST] player attacked ({status.curHp}/{status.hp})");
 
         CamEffManager.instance.CallAttackedEff();
 

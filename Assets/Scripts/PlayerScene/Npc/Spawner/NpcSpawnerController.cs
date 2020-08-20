@@ -36,7 +36,7 @@ public class NpcSpawnerController : MonoBehaviour
     public void InitType()
     {
         if (isFirstNpcSpawner)
-            type = WeaponType.pistol;
+            type = WeaponType.rocket;
 
         else
         {

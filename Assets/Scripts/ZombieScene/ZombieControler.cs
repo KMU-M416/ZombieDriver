@@ -34,7 +34,9 @@ public class ZombieControler : MonoBehaviour
     public bool isDead;
     bool initRotate = false;
 
-   public NavMeshAgent agent; // AI
+    public NavMeshAgent agent; // AI
+    CapsuleCollider _CapSule;
+    Rigidbody _Rd;
 
     IEnumerator co_knockBack;
 
@@ -43,35 +45,31 @@ public class ZombieControler : MonoBehaviour
         status.currentHp = status.hp; // 사망과 함께 Pool에 반환되었다가 다시 생성되는 순간 HP 회복
 
         isDead = isAttack = false;
-        GetComponent<CapsuleCollider>().enabled = true;
+        _CapSule.enabled = true;
 
         if (myType == ZombieType.smartAI)
         {
             if (agent == null) agent = GetComponent<NavMeshAgent>();
 
             agent.enabled = true;
-
-            target = GameObject.Find("Truck").transform;
         }
         initRotate = false;
     }
 
-    private void OnDisable()
+    private void Awake()
     {
-        //if (rocketNPC != null && pistolNPC != null)
-        //{
-        //    rocketNPC.GetComponent<AssultController>().deleteList(gameObject);
-        //    pistolNPC.GetComponent<AssultController>().deleteList(gameObject);
-        //}
+        agent = GetComponent<NavMeshAgent>();
+        _CapSule = GetComponent<CapsuleCollider>();
+        _Rd = GetComponent<Rigidbody>();
+        ZombieGenerator = transform.parent.parent.GetComponent<ZombieGenerator>();
+        zombieAnimator = GetComponent<Animator>();
+
+        Application.targetFrameRate = 60;
     }
 
     void Start()
     {
-        ZombieGenerator = transform.parent.parent.GetComponent<ZombieGenerator>();
-        zombieAnimator = GetComponent<Animator>();
-
-        //rocketNPC = GameObject.Find("NPC_Female_Rocket").GetComponentInChildren<AssultController>().gameObject;
-        //pistolNPC = GameObject.Find("NPC_Male_Pistol").GetComponentInChildren<AssultController>().gameObject;
+        target = TruckGameObject.Truck;
     }
 
     void Update()
@@ -97,20 +95,10 @@ public class ZombieControler : MonoBehaviour
         }
         else if (myType == ZombieType.smartAI)
         {
-            GetComponent<Rigidbody>().velocity = Vector3.zero;
             agent.enabled = false;
+            _Rd.velocity = Vector3.zero;
         }
     }
-
-    /// <summary>
-    /// 로켓과 권총 NPC만 해당
-    /// 해당 좀비가 죽거나, 범위 내에 없을시 타겟리스트를 지우기 위함
-    /// </summary>
-    /// <param name="NPC"> NPC 오브젝트 </param>
-    //public void setNPCObject(GameObject NPC)
-    //{
-    //    targetNPC = NPC;
-    //}
 
     /// <summary>
     /// 좀비 피격
@@ -186,23 +174,17 @@ public class ZombieControler : MonoBehaviour
             pistolNPC.deleteList(gameObject);
         }
 
-        //if (GameObject.Find("NPC_Rifle(Clone)") == true)
-        //{
-        //    AssultController pistolNPC = GameObject.Find("NPC_Rifle(Clone)").GetComponentInChildren<AssultController>();
-        //    pistolNPC.deleteList(gameObject);
-        //}
-
         if (myType == ZombieType.smartAI)
         {
             agent.enabled = false;
-            GetComponent<Rigidbody>().velocity = Vector3.zero;
+           _Rd.velocity = Vector3.zero;
         }
 
         target = null; // 플레이어 삭제
 
         zombieAnimator.SetTrigger("isDead");
 
-        GetComponent<CapsuleCollider>().enabled = false;
+        _CapSule.enabled = false;
 
         StartCoroutine(DieAni());
 
