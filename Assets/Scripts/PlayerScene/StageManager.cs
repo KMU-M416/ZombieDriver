@@ -8,6 +8,8 @@ public class StageManager : MonoBehaviour
 
     public ZombieGenerator[] zombieSpawnerList;
 
+    public GameObject Gate;
+
     public int curRescueNpcCount;
     public int goalRescueNpcCount = 8;
 
@@ -44,5 +46,7 @@ public class StageManager : MonoBehaviour
 
         // 게임 클리어를 위한 구문
         // 다리로 나갈 수 있도록 한다거나 뭐 그런거
+
+        Destroy(Gate);
     }
 }

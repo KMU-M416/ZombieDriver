@@ -1,0 +1,12 @@
+1.0.22 -> 1.0.23
+'1.0.23 Apply game ending product system'
+
+============================
+
+
+# PlayerScene #
+
+-** Ending system **
+
+1. 게임 엔딩 연출이 적용되었습니다.
+

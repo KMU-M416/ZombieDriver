@@ -19,14 +19,12 @@ public class WeaponStatus
     public float shotSpeed;
 }
 
-
 public class AssultController : MonoBehaviour
 {
     [Header("Components")]
     public GameObject shotEff; // prefs for each weapon type
                                //public Transform muzzle; // 총구
-
-
+                               
     Animator anim; // auto load on start()
     GameObject shotgunRange; // 샷건 공격 범위, auto load on start().
 
