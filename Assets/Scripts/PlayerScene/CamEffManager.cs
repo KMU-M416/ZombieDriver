@@ -70,7 +70,7 @@ public class CamEffManager : MonoBehaviour
         print($"[TEST] GameOverEff Called");
 
         float timer = 0f;
-        while(timer < 5f)
+        while(timer < 3f)
         {
             timer += Time.deltaTime;
 

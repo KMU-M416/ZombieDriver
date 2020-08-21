@@ -36,7 +36,9 @@ public class NpcSpawnerController : MonoBehaviour
     public void InitType()
     {
         if (isFirstNpcSpawner)
-            type = WeaponType.rocket;
+            type = WeaponType.pistol;
+
+        // [K-Circle] 팀16bit 최종 결과물 Deadline
 
         else
         {
