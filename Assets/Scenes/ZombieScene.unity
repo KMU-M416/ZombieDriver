@@ -197,7 +197,7 @@ PrefabInstance:
     - target: {fileID: 4993663452549960071, guid: 03081db10bac9274a9f4e7c744e5d215,
         type: 3}
       propertyPath: zombieType
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4993663452549960071, guid: 03081db10bac9274a9f4e7c744e5d215,
         type: 3}
@@ -301,7 +301,7 @@ PrefabInstance:
     - target: {fileID: 4993663452549960071, guid: 03081db10bac9274a9f4e7c744e5d215,
         type: 3}
       propertyPath: zombieType
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4993663452549960071, guid: 03081db10bac9274a9f4e7c744e5d215,
         type: 3}
@@ -515,7 +515,7 @@ PrefabInstance:
     - target: {fileID: 4993663452549960071, guid: 03081db10bac9274a9f4e7c744e5d215,
         type: 3}
       propertyPath: zombieType
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4993663452549960071, guid: 03081db10bac9274a9f4e7c744e5d215,
         type: 3}
@@ -625,7 +625,7 @@ PrefabInstance:
     - target: {fileID: 4993663452549960071, guid: 03081db10bac9274a9f4e7c744e5d215,
         type: 3}
       propertyPath: zombieType
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4993663452549960071, guid: 03081db10bac9274a9f4e7c744e5d215,
         type: 3}
@@ -729,7 +729,7 @@ PrefabInstance:
     - target: {fileID: 4993663452549960071, guid: 03081db10bac9274a9f4e7c744e5d215,
         type: 3}
       propertyPath: zombieType
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4993663452549960071, guid: 03081db10bac9274a9f4e7c744e5d215,
         type: 3}
@@ -934,7 +934,7 @@ PrefabInstance:
     - target: {fileID: 4993663452549960071, guid: 03081db10bac9274a9f4e7c744e5d215,
         type: 3}
       propertyPath: zombieType
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4993663452549960071, guid: 03081db10bac9274a9f4e7c744e5d215,
         type: 3}
@@ -1135,7 +1135,7 @@ PrefabInstance:
     - target: {fileID: 4993663452549960071, guid: 03081db10bac9274a9f4e7c744e5d215,
         type: 3}
       propertyPath: zombieType
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4993663452549960071, guid: 03081db10bac9274a9f4e7c744e5d215,
         type: 3}
@@ -1239,7 +1239,7 @@ PrefabInstance:
     - target: {fileID: 4993663452549960071, guid: 03081db10bac9274a9f4e7c744e5d215,
         type: 3}
       propertyPath: zombieType
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4993663452549960071, guid: 03081db10bac9274a9f4e7c744e5d215,
         type: 3}
@@ -1343,7 +1343,7 @@ PrefabInstance:
     - target: {fileID: 4993663452549960071, guid: 03081db10bac9274a9f4e7c744e5d215,
         type: 3}
       propertyPath: zombieType
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4993663452549960071, guid: 03081db10bac9274a9f4e7c744e5d215,
         type: 3}

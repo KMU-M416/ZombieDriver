@@ -2253,6 +2253,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: ZombieHpUI
       objectReference: {fileID: 0}
+    - target: {fileID: 1309809336142881174, guid: 1ab488e7fbb57414ab66a4c68c010285,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4561441168329163851, guid: 1ab488e7fbb57414ab66a4c68c010285,
         type: 3}
       propertyPath: m_LocalPosition.x
