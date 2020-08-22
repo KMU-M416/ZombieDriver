@@ -125,7 +125,7 @@ public class PlayerMover : MonoBehaviour
         CamEffManager.instance.CallAttackedEff();
 
 
-        if (status.curHp <= 0)
+        if (status.curHp <= 0 && this.enabled == true)
         {
             Die();
         }
