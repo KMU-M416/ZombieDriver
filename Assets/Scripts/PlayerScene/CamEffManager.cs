@@ -70,7 +70,7 @@ public class CamEffManager : MonoBehaviour
         print($"[TEST] GameOverEff Called");
 
         float timer = 0f;
-        while(timer < 3f)
+        while(timer < 5f)
         {
             timer += Time.deltaTime;
 
@@ -78,13 +78,13 @@ public class CamEffManager : MonoBehaviour
 
             yield return null;
         }
+        
+        //while (!Input.GetKeyDown(KeyCode.Escape))
+        //{
+        //    // 대기
 
-        while (!Input.GetKeyDown(KeyCode.Escape))
-        {
-            // 대기
-
-            yield return null;
-        }
+        //    yield return null;
+        //}
         
         LoadingManager.LoadScene(SceneNames.TitleScene.ToString(), SceneNames.IngameScene.ToString());
     }

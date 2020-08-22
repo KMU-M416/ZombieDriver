@@ -138,5 +138,18 @@ public class PlayerMover : MonoBehaviour
 
         // 추가 플레이어 조작 불가능
         this.enabled = false;
+
+        // NPC 동작 제어
+        AssultController[] ac = GetComponentsInChildren<AssultController>();
+        foreach (AssultController a in ac)
+        {
+            a.gameObject.SetActive(false);
+        }
+
+
+        // 트럭 폭발 이펙트
+        GameObject eff = Resources.Load<GameObject>("Prefabs/Effs/Weapon Particle Effects/Rocket/RocketExplosion");
+
+        Instantiate(eff, transform.position, Quaternion.identity);
     }
 }

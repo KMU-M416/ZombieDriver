@@ -45,8 +45,7 @@ public class StageManager : MonoBehaviour
         isClear = true;
 
         // 게임 클리어를 위한 구문
-        // 다리로 나갈 수 있도록 한다거나 뭐 그런거
-
+        // 게이트 오픈
         Destroy(Gate);
     }
 }
