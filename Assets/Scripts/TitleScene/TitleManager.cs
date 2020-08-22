@@ -20,7 +20,7 @@ public class TitleManager : MonoBehaviour
     {
         LoadingManager.LoadScene(SceneNames.IngameScene.ToString(), SceneNames.TitleScene.ToString());
 
-        //SceneManager.LoadSceneAsync("PlayerScene");
+       // SceneManager.LoadSceneAsync("PlayerScene");
         //SceneManager.LoadSceneAsync("ZombieScene", LoadSceneMode.Additive);
     }
 
