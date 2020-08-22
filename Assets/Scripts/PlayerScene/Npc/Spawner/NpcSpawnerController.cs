@@ -2,43 +2,45 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using UnityEngine.UI;
+
 public class NpcSpawnerController : MonoBehaviour
 {
     [Header("Components")]
+    public GameObject Help;
+    public GameObject WeaponImage;
     Transform SpeechBubble;
+
+
+    [Header("Elements")]
+    public Sprite[] weaponImgs;
 
     [Header("Sensibilities")]
     [SerializeField] bool isFirstNpcSpawner;
     [SerializeField] WeaponType type; // NPC 종류 설정
     public float waitTime = 3.0f; // 해당 NPC를 획득하기 위한 필요 대기 시간
-
-    [Header("== TEST ==")] 
-    public bool trigger;
+    
 
     private void Start()
     {
         InitType();
 
         SpeechBubble = transform.Find("SpeechBubble");
-        SpeechBubble.transform.eulerAngles = new Vector3(45, 45, 0);
+        SpeechBubble.eulerAngles = new Vector3(45, 45, 0);
+
+        WeaponImage.GetComponent<Image>().sprite = weaponImgs[(int)type];
 
     }
 
-    private void Update()
+    private void OnEnable()
     {
-        if (trigger)
-        {
-            trigger = false;
-            GetNpcFromSpawner();
-        }
+        StartCoroutine(SpeechBubbleChanger());
     }
 
     public void InitType()
     {
         if (isFirstNpcSpawner)
             type = WeaponType.pistol;
-
-        // [K-Circle] 팀16bit 최종 결과물 Deadline
 
         else
         {
@@ -77,13 +79,26 @@ public class NpcSpawnerController : MonoBehaviour
 
             PlayerUIManager.instance.AddNpc(type, lv);
         }
-
         
-
-
         // 자신 npc 스포너 삭제
         Destroy(gameObject);
-        
     }
 
+    IEnumerator SpeechBubbleChanger()
+    {
+        while (true)
+        {
+            // help
+            Help.SetActive(true);
+            WeaponImage.SetActive(false);
+
+            yield return new WaitForSeconds(1.0f);
+
+            //show weapon
+            Help.SetActive(false);
+            WeaponImage.SetActive(true);
+
+            yield return new WaitForSeconds(1.0f);
+        }
+    }
 }
