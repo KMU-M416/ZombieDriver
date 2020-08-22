@@ -9,6 +9,8 @@ public class PlayerDetector : MonoBehaviour
     bool isDetect = false;
 
     int moveType;
+    bool isMove = false;
+    float timer = 0;
 
     private void Start()
     {
@@ -24,9 +26,12 @@ public class PlayerDetector : MonoBehaviour
         {
             if (isDetect || ZC.isDead || ZC.isAttack) yield return null;
 
-            moveType = Random.Range(0, 100);
+            if (!isMove)
+            {
+                moveType = Random.Range(0, 100);
 
-            transform.parent.rotation = Quaternion.Euler(new Vector3(0, transform.parent.rotation.y + Random.Range(-20, 21), 0));
+                transform.parent.rotation = Quaternion.Euler(new Vector3(0, transform.parent.rotation.y + Random.Range(-20, 21), 0));
+            }           
 
             if (moveType > 0 && moveType < 50) // 멈춰있는 상태
             {
@@ -34,10 +39,22 @@ public class PlayerDetector : MonoBehaviour
             }
             else
             {
-                ZC.zombieAnimator.SetBool("isWalk", true);
+                isMove = true;
+                timer += Time.deltaTime;
+
+                transform.parent.Translate(Vector3.forward * ZC.GetAttackInfo(2) * Time.deltaTime ,Space.Self);
+                ZC.zombieAnimator.SetBool("isWalk", true);     
+                
+                if(timer > 7.0f)
+                {
+                    timer = 0;
+                    isMove = false;
+                }
             }
 
-            yield return new WaitForSeconds(7.0f);
+            if (!isMove)
+                yield return new WaitForSeconds(7.0f);
+            else yield return null;
         }
     }
 

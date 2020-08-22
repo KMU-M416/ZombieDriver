@@ -1,0 +1,21 @@
+1.0.26 -> 1.0.27
+'1.0.27 Fixed Zombie movement, etc.'
+
+============================
+
+# PlayerScene #
+
+-** Light & Shader system**
+
+1. 맵에 가로등이 배치되었습니다.
+
+# ZombieScene #
+
+-** Zombie **
+
+1. 멍청한 좀비가 바다를 향해 가는것을 수정하였습니다.
+
+# Title Scene #
+
+1. 셋팅UI가 적용되었습니다.
+
