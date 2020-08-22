@@ -33,6 +33,7 @@ public class LoadingManager : MonoBehaviour
         try
         {
             logs.text += ">> Scene Load Start() called [LoadingManager.cs]\n";
+
             if (beforeScene != null)
             {
                 if (beforeScene == SceneNames.IngameScene.ToString())
@@ -54,7 +55,8 @@ public class LoadingManager : MonoBehaviour
         }
         catch (System.Exception e)
         {
-            logs.text += e;
+            //logs.text += e;
+            Debug.Log(e);
         }
 
     }
@@ -94,11 +96,13 @@ public class LoadingManager : MonoBehaviour
         op.allowSceneActivation = false;
 
         float timer = 0f;
+
         while (!op.isDone)
         {
             yield return null;
 
             timer += Time.deltaTime;
+
             if (op.progress < 0.9f)
             {
                 progressBar.fillAmount = Mathf.Lerp(progressBar.fillAmount, op.progress, timer);
@@ -107,6 +111,7 @@ public class LoadingManager : MonoBehaviour
             else
             {
                 progressBar.fillAmount = Mathf.Lerp(progressBar.fillAmount, 1.0f, timer);
+
                 if (progressBar.fillAmount >= 1f)
                 {
                     logs.text += ">> Loading Finish!! wait for start ...\n";
@@ -115,6 +120,34 @@ public class LoadingManager : MonoBehaviour
                 }
             }
         }
+
+        //while (true)
+        //{
+        //    yield return null;
+
+        //    timer += Time.deltaTime;
+
+        //    if (op.progress < 0.9f)
+        //    {
+        //        progressBar.fillAmount = Mathf.Lerp(progressBar.fillAmount, op.progress, timer);
+        //        if (progressBar.fillAmount >= op.progress) timer = 0f;
+        //    }
+        //    else
+        //    {
+        //        progressBar.fillAmount = Mathf.Lerp(progressBar.fillAmount, 1.0f, timer);
+
+        //        if (progressBar.fillAmount >= 1f)
+        //        {
+        //            logs.text += ">> Loading Finish!! wait for start ...\n";                    
+        //             yield return new WaitForSeconds(1f);
+        //            logs.text += op.isDone;
+        //            op.allowSceneActivation = true;
+        //            break;
+        //        }
+        //    }
+        //}
+
+        Debug.Log("Loop Finish");
 
         SceneManager.UnloadSceneAsync("LoadingScene");
     }
