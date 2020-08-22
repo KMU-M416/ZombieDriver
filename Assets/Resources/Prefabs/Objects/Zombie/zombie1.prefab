@@ -352,7 +352,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 18c5eb490f01c6f4fbf02848c1ac0fbe, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
@@ -404,7 +404,7 @@ MonoBehaviour:
   status:
     hp: 100
     currentHp: 0
-    moveSpeed: 0
+    moveSpeed: 2
     attackSpeed: 3
     damage: 5
   target: {fileID: 0}

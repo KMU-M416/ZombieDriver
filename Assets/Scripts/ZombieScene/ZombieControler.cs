@@ -77,7 +77,7 @@ public class ZombieControler : MonoBehaviour
         if (!initRotate)
         {
             initRotate = true;
-            transform.Rotate(0, Random.Range(-359, 360), 0);
+            transform.Rotate(0, Random.Range(-180, 180), 0);
         }
 
         if (!isDead && !isAttack)
@@ -154,7 +154,8 @@ public class ZombieControler : MonoBehaviour
     public int GetAttackInfo(int type)
     {
         if (type == 0) return status.attackSpeed;
-        else return status.damage;
+        else if (type == 1) return status.damage;
+        else return status.moveSpeed;
     }
 
     /// <summary>
