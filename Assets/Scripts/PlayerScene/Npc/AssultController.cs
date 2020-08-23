@@ -237,6 +237,7 @@ public class AssultController : MonoBehaviour
                     case WeaponType.shotgun:
 
                         anim.SetTrigger("assult");
+                        attackSound.Play();
 
                         GameObject tmp2 = Instantiate(shotEff,
                             transform.position + transform.TransformVector(0, 1, 2),
