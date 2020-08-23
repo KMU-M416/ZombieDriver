@@ -8,7 +8,7 @@ public class TitleManager : MonoBehaviour
 {
     [Header("Elements")]
     public GameObject settingTab;
-
+    public GameObject AboutTab;
     public GameObject startSelectTab; // 난이도 버튼 탭
     public RectTransform startBtn;
     public RectTransform[] otherBtns; // Start를 제외한, 나머지 버튼들
@@ -96,9 +96,19 @@ public class TitleManager : MonoBehaviour
         coroutine = null;
     }
 
-
-    public void OnSettingTab()
+    /// <summary>
+    /// 타이틀에서 탭 누르면 UI 오픈
+    /// </summary>
+    /// <param name="type"> 1 = 셋팅 , 2 = 어바웃플레이 </param>
+    public void OnUI(int type)
     {
-        settingTab.SetActive(true);
+        if (type == 1) settingTab.SetActive(true);
+        else AboutTab.SetActive(true);
+    }
+
+    public void OffUI(int type)
+    {
+        if (type == 1) settingTab.SetActive(false);
+        else AboutTab.SetActive(false);
     }
 }
