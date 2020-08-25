@@ -15,7 +15,7 @@ public class PlayerStatus
     [Header("Sensibility")]
     public float accelSpeed = 20;
     public float angleSpeed = 30;
-    public int angleDegree = 60;
+    public int angleDegree = 90;
 
     [Header("Components")]
     public Image hpBar;
@@ -91,15 +91,15 @@ public class PlayerMover : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftArrow))
         {
             //wheel.Rotate(-Vector3.up * angleSpeed * Time.deltaTime);
-            wheelL.localRotation = Quaternion.Euler(0, -status.angleDegree * 0.5f, 0);
-            wheelR.localRotation = Quaternion.Euler(0, -status.angleDegree * 0.5f, 0);
+            wheelL.localRotation = Quaternion.Euler(0, -status.angleDegree * 0.2f, 0);
+            wheelR.localRotation = Quaternion.Euler(0, -status.angleDegree * 0.2f, 0);
             way = -1;
         }
         else if (Input.GetKey(KeyCode.RightArrow))
         {
             //wheel.Rotate(Vector3.up * angleSpeed * Time.deltaTime);
-            wheelL.localRotation = Quaternion.Euler(0, status.angleDegree * 0.5f, 0);
-            wheelR.localRotation = Quaternion.Euler(0, status.angleDegree * 0.5f, 0);
+            wheelL.localRotation = Quaternion.Euler(0, status.angleDegree * 0.2f, 0);
+            wheelR.localRotation = Quaternion.Euler(0, status.angleDegree * 0.2f, 0);
             way = 1;
         }
         else

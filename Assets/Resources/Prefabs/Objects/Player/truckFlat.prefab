@@ -511,7 +511,7 @@ Light:
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 1
-  m_Range: 10
+  m_Range: 5
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -777,7 +777,7 @@ MonoBehaviour:
     curHp: 0
     accelSpeed: 20
     angleSpeed: 30
-    angleDegree: 60
+    angleDegree: 90
     hpBar: {fileID: 0}
 --- !u!54 &2043390071450992000
 Rigidbody:
