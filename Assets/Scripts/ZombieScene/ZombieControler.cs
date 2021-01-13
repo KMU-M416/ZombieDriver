@@ -4,16 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.AI;
 
-[System.Serializable]
-public class ZombieStatus
-{
-    public int hp;
-    [HideInInspector] public int currentHp;
-
-    public int moveSpeed;
-    public int attackSpeed;
-    public int damage;
-}
 
 public class ZombieControler : MonoBehaviour
 {
@@ -24,6 +14,7 @@ public class ZombieControler : MonoBehaviour
 
     [Header("Zombie Status")]
     public ZombieStatus status;
+    [HideInInspector] public int currentHp;
     public Transform target; // 트럭
 
     [HideInInspector]
@@ -42,7 +33,8 @@ public class ZombieControler : MonoBehaviour
 
     private void OnEnable()
     {
-        status.currentHp = status.hp; // 사망과 함께 Pool에 반환되었다가 다시 생성되는 순간 HP 회복
+        if (status != null)
+            currentHp = status.Hp; // 사망과 함께 Pool에 반환되었다가 다시 생성되는 순간 HP 회복
 
         isDead = isAttack = false;
         _CapSule.enabled = true;
@@ -108,9 +100,9 @@ public class ZombieControler : MonoBehaviour
     /// <returns> is Dead ? </returns>
     public bool ReduceHp(float value, bool isKnockBack = false)
     {
-        status.currentHp -= (int)value;
+        currentHp -= (int)value;
 
-        if (status.currentHp <= 0 && !isDead)
+        if (currentHp <= 0 && !isDead)
         {
             isDead = true;           
             Die();
@@ -144,7 +136,7 @@ public class ZombieControler : MonoBehaviour
 
     public int GetHp()
     {
-        return status.currentHp;
+        return currentHp;
     }
 
     /// <summary>
@@ -153,9 +145,9 @@ public class ZombieControler : MonoBehaviour
     /// <param name="type">0: 공격 속도,  1: 공격력</param>
     public int GetAttackInfo(int type)
     {
-        if (type == 0) return status.attackSpeed;
-        else if (type == 1) return status.damage;
-        else return status.moveSpeed;
+        if (type == 0) return status.AttackSpeed;
+        else if (type == 1) return status.Damage;
+        else return status.MoveSpeed;
     }
 
     /// <summary>
