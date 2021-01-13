@@ -19,6 +19,7 @@ public class ZombieGenerator : MonoBehaviour
 {
     [Header("Zombie")]
     public GameObject[] Zombies;
+    public ZombieStatus[] ZombieDatas;
     Transform zombiesParent;
 
     [Header("Setting")]
@@ -67,6 +68,9 @@ public class ZombieGenerator : MonoBehaviour
         {
             zombieNormalType = Instantiate(Zombies[0], zombiesParent);
             zombieSmartType = Instantiate(Zombies[1], zombiesParent);
+
+            zombieNormalType.GetComponent<ZombieControler>().status = ZombieDatas[0];
+            zombieSmartType.GetComponent<ZombieControler>().status = ZombieDatas[1];
 
             zombieNormalType.SetActive(false);
             zombieSmartType.SetActive(false);

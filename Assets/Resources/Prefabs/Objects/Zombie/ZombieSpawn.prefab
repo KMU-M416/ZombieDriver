@@ -58,6 +58,10 @@ MonoBehaviour:
   Zombies:
   - {fileID: 4511484469483276802, guid: b08b2e46033be9e48b179d8adf9366ca, type: 3}
   - {fileID: 5652205391898338294, guid: 0684230473786e64593c161673585a83, type: 3}
+  ZombieDatas:
+  - {fileID: 11400000, guid: 3aecc3021e3ba45428e49c6e64f87686, type: 2}
+  - {fileID: 11400000, guid: 7a49dce6049d1cf42bcbd1fe20d727cd, type: 2}
+  poolingCount: 200
   SpawnType: 0
   spawnTime: 1
   spawnCount: 1
